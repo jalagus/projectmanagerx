@@ -1,5 +1,5 @@
 <h2>Login</h2>
-<form>
+<form action="controller/Login.php" method="POST">
 Username:<br/>
 <input type="text" name="username" /> <br/>
 

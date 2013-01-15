@@ -6,6 +6,6 @@
     <li><a href="controller/Ajax.php?action=projectAdd">Add project</a></li>
   </ul>
   <div id="content">
-    <p>Main content</p>
+    <p>Latest changes:</p>
   </div>
 </div>
