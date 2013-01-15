@@ -8,16 +8,22 @@ class Controller {
 	public function invoke() {
 		$page = $_GET['page'];
 	
-		if ($page == "books") {
-			echo "Boooooooks!";
+		include("view/headerBlock.php");
+		
+		$this->loadPage($page);
+		
+		include("view/footerBlock.php");
+	}
+
+	public function loadPage($pageName) {
+		if ($pageName == "login") {
+			include("view/login.php");
 		}
 		else {
-			//include("views/main.php");
-			
-			echo "Main!";
-		}
+			include("view/main.php");
+		}	
 	}
-	
 }
+
 
 ?>
