@@ -1,13 +1,15 @@
 </div>
 <div id="#footer">
-Project Manager X - 2013 
+    <a id="logoutButton" href="#">Logout</a>
 
-<form action="" method="POST"> 
-<input type="hidden" name="controller" value="login" /> 
-<input type="hidden" name="action" value="logout" /> 
-<input type="submit" value="Logout" /> 
-</form>
-
+    <script>
+        $("#logoutButton").click( function() {
+            $.post("", { controller: "login", action: "logout" },
+            function() {
+                window.location.href = "";
+            });
+        });
+    </script>
 </div>
 </body>
 </html>

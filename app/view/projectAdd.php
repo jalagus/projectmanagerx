@@ -4,7 +4,15 @@
 <input type="hidden" name="controller" value="project" />
 <input type="hidden" name="action" value="add" />
 
-<input type="text" name="projectName" />
-<input type="text" name="projectDescription" />
+Name <br/>
+<input type="text" name="projectName" /><br/>
+
+Description<br/>
+<textarea name="projectDescription">
+
+</textarea><br/>
+
 <input type="submit" value="Add project" />
+<input type="reset" value="Clear" />
+
 </form>

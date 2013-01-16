@@ -1,1 +1,1 @@
-<p> Browse projects </p>
+<p> Browse hours </p>
