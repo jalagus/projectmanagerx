@@ -1,19 +1,32 @@
 <?php
 
-include_once("controller/MainController.php");
-include_once("controller/LoginController.php");
-include_once("controller/ProjectController.php");
+// Base classes
+require("classes/loader.php");
+require("classes/basecontroller.php");
+require("classes/basemodel.php");
+require("classes/authentication.php");
 
-$controller = $_POST['controller'];
+// Models
+require("models/home.php");
+require("models/project.php");
+require("models/projectviewmodel.php");
+require("models/authentication.php");
+require("models/hours.php");
 
-if ($controller == 'login') {
-    $loginController = new LoginController();
-    $loginController->invoke();
-} else if ($controller == 'project') {
-    $projectController = new ProjectController();
-    $projectController->invoke();
-} else {
-    $mainController = new MainController();
-    $mainController->invoke();
-}
+// Controllers
+require("controllers/home.php");
+require("controllers/error.php");
+require("controllers/project.php");
+require("controllers/authentication.php");
+require("controllers/hours.php");
+
+// Run application
+session_start();
+
+$loader = new Loader($_GET);
+
+$controller = $loader->CreateController();
+
+$controller->Invoke();
+
 ?>
