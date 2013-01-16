@@ -1,37 +1,42 @@
 <?php
 
-class Controller {	
-	public function __construct() {
-		session_start();
+include_once("model/Login.php");
+include_once("model/DatabaseConnection.php");
 
+class Controller {	
+
+	public $login;
+	public $database;
+	
+	public function __construct() {
+		$this->database = new DatabaseConnection("root", "root", "localhost", "project_db");
+		
+		$this->login = new Login($this->database);
 	}
 
-	public function invoke() {
-		$page = $_GET['page'];
-
-		if ($_SESSION['user'] == "test") {
-			$logged = true;
-		}
+	public function invoke() {	
+		session_start();
+		
+		$action = $_POST['action'];
 	
-		if ($logged == true) {
+		if ($action == 'login') {
+			$username = $_POST['username'];
+			$password = $_POST['password'];
+			
+			$this->login->doLogin($username, $password);
+		}
+		else if ($action == 'logout') {
+			$this->login->logout();
+		}
+				
+		if ($this->login->isLogged()) {
 			include("view/headerBlock.php");
-			$this->loadPage($page);
+			include("view/main.php");
 			include("view/footerBlock.php");
 		}
 		else {
-                        include("view/headerBlock.php");
-                        $this->loadPage("login");
-                        include("view/footerBlock.php");
-		}
-	}
-
-	public function loadPage($pageName) {
-		if ($pageName == "login") {
 			include("view/login.php");
 		}
-		else {
-			include("view/main.php");
-		}	
 	}
 }
 
