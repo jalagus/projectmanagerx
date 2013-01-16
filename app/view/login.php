@@ -15,6 +15,7 @@
 <h2>Project Manager X</h2>
 <form action="" method="POST">
 
+<input type="hidden" name="controller" value="login" />
 <input type="hidden" name="action" value="login" />
 
 Username<br/>

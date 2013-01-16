@@ -35,9 +35,12 @@ class Login {
 	}
 
 	public function logout() {
-		unset($_SESSION['user']);
+		if(session_id() == '') {
+    		session_start();
+		}	
 		
 		session_destroy();
+		unset($_SESSION['user']);
 	}
 
 	public function isLogged() {
