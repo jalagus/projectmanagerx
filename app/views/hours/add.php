@@ -18,7 +18,7 @@ Hours<br/>
 Minutes<br/>
 <input type="text" name="minutes" /><br/>
 Date<br/>
-<input type="text" name="date" /><br/>
+<input class="dateInput" type="text" name="date" /><br/>
 
 <input type="submit" value="Add hours" />
 </form>

@@ -1,12 +1,22 @@
-<h2> Projekteja pukkaa </h2>
-<ul>
+<h2> Project list </h2>
+<table>
+    <thead>
+    <td>Project</td>
+    <td>Minutes</td>
+    <td>Delete</td>
+    </thead>
 <?php
+    
     foreach($viewmodel as $project) {
-        echo "<li>" . $project->name . 
-                '<form action="/project/delete" method="POST"> 
-                    <input type="hidden" name="projectid" value="' . $project->id . '" />
-                        <input type="submit" value="Delete" /></form>
-                    </li>';
+        
+        echo "<tr>";
+        
+        echo '<td>' . $project->projectname . '</td><td>' . $project->minutes . '</td>
+            <td><form action="/project/delete" method="POST"> 
+            <input type="hidden" name="projectid" value="' . $project->projectid . '" />
+            <input type="submit" value="Delete" /></form></td>';
+        
+        echo "</tr>";
     }
 ?>
-</ul>
+</table>

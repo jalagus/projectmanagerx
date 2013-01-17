@@ -12,6 +12,7 @@ require("models/project.php");
 require("models/projectviewmodel.php");
 require("models/authentication.php");
 require("models/hours.php");
+require("models/hoursviewmodel.php");
 require("models/report.php");
 
 // Controllers

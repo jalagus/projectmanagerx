@@ -2,31 +2,34 @@
 
 class HoursModel extends BaseModel {
 
-    public function Index() {
-        $query = $this->database->prepare("SELECT projects.name AS name, hours.minutes AS minutes 
-            FROM hours, projects WHERE projects.id = hours.projectid");
+    public function Index($userid) {
+        $query = $this->database->prepare("SELECT 
+            projects.name AS projectname, hours.minutes AS minutes, hours.date AS date, hours.id AS id
+            FROM hours, projects 
+            WHERE hours.projectid = projects.id AND hours.userid = ?
+            ORDER BY hours.date DESC");
         
-        $query->execute(); 
+        $query->execute(array($userid)); 
         
         $hourslist = array();
         
         $i = 0;
-        while ($row = $query->fetch()) {
-            $hourslist[$i++] = $row['name'] . ": " . $row['minutes'];
+        while ($hoursObject = $query->fetchObject("HoursViewmodel")) {
+            $hourslist[$i++] = $hoursObject;
         }
         
         return $hourslist;
     }
     
-    public function Add() {
-        $query = $this->database->prepare("SELECT * FROM projects");
-        $query->execute(); 
+    public function Add($userid) {
+        $query = $this->database->prepare("SELECT * FROM projects WHERE userid = ?");
+        $query->execute(array($userid)); 
         
         $projectlist = array();
         
         $i = 0;
-        while ($row = $query->fetch()) {
-            $projectlist[$i++] = new ProjectViewmodel($row['id'], $row['name']);
+        while ($row = $query->fetchObject("ProjectViewmodel")) {
+            $projectlist[$i++] = $row;
         }
         
         return $projectlist;
@@ -35,6 +38,11 @@ class HoursModel extends BaseModel {
     public function AddHours($userid, $projectid, $minutes, $date) {
         $query = $this->database->prepare("INSERT INTO hours (userid, projectid, minutes, date) VALUES (?, ?, ?, ?)");
         $query->execute(array($userid, $projectid, $minutes, $date));           
+    }
+    
+    public function Delete($hoursid) {
+        $query = $this->database->prepare("DELETE FROM hours WHERE id = ?");
+        $query->execute(array($hoursid));        
     }
 }
 
