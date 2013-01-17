@@ -2,9 +2,9 @@
 
 class ProjectModel extends BaseModel {
 
-    public function Index() {
-        $query = $this->database->prepare("SELECT * FROM projects");
-        $query->execute(); 
+    public function Index($userid) {
+        $query = $this->database->prepare("SELECT * FROM projects WHERE userid = ?");
+        $query->execute(array($userid)); 
         
         $projectlist = array();
         
@@ -16,9 +16,14 @@ class ProjectModel extends BaseModel {
         return $projectlist;
     }
     
-    public function Add($projectName, $projectDescription) {
-        $query = $this->database->prepare("INSERT INTO projects (name, description) VALUES (?, ?)");
-        $query->execute(array($projectName, $projectDescription));     
+    public function Add($userid, $projectName, $projectDescription) {
+        $query = $this->database->prepare("INSERT INTO projects (userid, name, description) VALUES (?, ?, ?)");
+        $query->execute(array($userid, $projectName, $projectDescription));     
+    }
+    
+    public function Delete($projectid) {
+        $query = $this->database->prepare("DELETE FROM projects WHERE id = ?");
+        $query->execute(array($projectid));   
     }
 
 }

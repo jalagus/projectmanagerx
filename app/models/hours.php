@@ -3,14 +3,16 @@
 class HoursModel extends BaseModel {
 
     public function Index() {
-        $query = $this->database->prepare("SELECT * FROM hours");
+        $query = $this->database->prepare("SELECT projects.name AS name, hours.minutes AS minutes 
+            FROM hours, projects WHERE projects.id = hours.projectid");
+        
         $query->execute(); 
         
         $hourslist = array();
         
         $i = 0;
         while ($row = $query->fetch()) {
-            $hourslist[$i++] = $row['name'];
+            $hourslist[$i++] = $row['name'] . ": " . $row['minutes'];
         }
         
         return $hourslist;

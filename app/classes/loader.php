@@ -9,7 +9,7 @@ class Loader {
     public function __construct($urlvalues) {
         $this->urlvalues = $urlvalues;
         
-        $auth = new Auth();
+        $auth = new AuthenticationUtils();
         
         if (!$auth->isLogged()) {
             $this->controller = "authentication";

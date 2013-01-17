@@ -12,7 +12,7 @@ class Hours extends BaseController {
             $this->ReturnView($viewmodel->Add(), true);
         }
         else {      
-            $userid = 1;
+            $userid = $_SESSION['userid'];
             $projectid = $_POST['projectName'];
             $minutes = ($_POST['hours'] * 60) + $_POST['minutes'];
             $date = $_POST['date'];

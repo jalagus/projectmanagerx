@@ -4,7 +4,8 @@ class Project extends BaseController {
 
     protected function Index() {
         $viewmodel = new ProjectModel();
-        $this->ReturnView($viewmodel->Index(), true);
+        $userid = $_SESSION['userid'];
+        $this->ReturnView($viewmodel->Index($userid), true);
     }
     
     protected function Add() {
@@ -14,13 +15,23 @@ class Project extends BaseController {
         else {
             $projectName = $_POST['projectName'];
             $projectDescription = $_POST['projectDescription'];
+            $userid = $_SESSION['userid'];
             
             $model = new ProjectModel();
             
-            $model->Add($projectName, $projectDescription);
+            $model->Add($userid, $projectName, $projectDescription);
             
             $this->ReturnView("Project added!", true);
         }
+    }    
+    
+    protected function Delete() {
+        $projectId = $_POST['projectid'];
+        
+        $model = new ProjectModel();
+        $model->Delete($projectId);
+        
+        $this->ReturnView("", true);
     }    
 
 }

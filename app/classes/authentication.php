@@ -1,9 +1,9 @@
 <?php
 
-class Auth { 
+class AuthenticationUtils { 
     
     public function isLogged() {
-        if ($_SESSION['logged'] == true) {
+        if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
             return true;
         }
         

@@ -1,7 +1,10 @@
-<?php
+<p> Hours list </p>
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
+<ul>
+<?php
+    foreach($viewmodel as $row) {
+        echo "<li>" . $row . "</li>";
+    }
 ?>
+</ul>

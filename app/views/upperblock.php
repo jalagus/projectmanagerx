@@ -22,7 +22,7 @@
                     <li><a href="/hours/">Browse hours</a></li>
                     <li><a href="/project/add">Add project</a></li>
                     <li><a href="/project/">List projects</a></li>    
-                    <li><a href="">Browse reports</a></li>
+                    <li><a href="/report/">Browse reports</a></li>
                     <li><a href="/authentication/logout">Logout</a></li>
                 </ul>
             </div>
