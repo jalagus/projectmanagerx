@@ -9,11 +9,14 @@ require("classes/authentication.php");
 // Models
 require("models/home.php");
 require("models/project.php");
-require("models/projectviewmodel.php");
 require("models/authentication.php");
 require("models/hours.php");
-require("models/hoursviewmodel.php");
 require("models/report.php");
+require("models/user.php");
+
+// Viewmodels
+require("models/projectviewmodel.php");
+require("models/hoursviewmodel.php");
 
 // Controllers
 require("controllers/home.php");

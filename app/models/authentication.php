@@ -7,9 +7,10 @@ class AuthenticationModel extends BaseModel {
         $query->execute(array($username, $password));
 
         if ($query->rowCount() > 0) {
-            $user = $query->fetch();
+            $user = $query->fetchObject("User");
             
-            $_SESSION['userid'] = $user['id'];
+            $_SESSION['userid'] = $user->id;
+            $_SESSION['username'] = $user->username;
             
             return true;
         } else {
