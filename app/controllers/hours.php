@@ -12,18 +12,27 @@ class Hours extends BaseController {
     protected function Add() {
         $userid = $_SESSION['userid'];
         
-        if (!isset($_POST['projectName'])) {
+        if (!isset($_POST['projectid'])) {
             $viewmodel = new HoursModel();
             $this->ReturnView($viewmodel->Add($userid), true);
         }
         else {      
-            $projectid = $_POST['projectName'];
-            $minutes = ($_POST['hours'] * 60) + $_POST['minutes'];
+            $projectid = $_POST['projectid'];
+            
+            $hours = $_POST['hours'];
+            $minutes = $_POST['minutes'];
+            
+            $i = 0;
+            while (isset($hours[$i])) {
+                $minuteSum[$i] = ($hours[$i] * 60) + $minutes[$i];
+                $i++;
+            }
+            
             $date = $_POST['date'];
             
             $model = new HoursModel();
             
-            $model->AddHours($userid, $projectid, $minutes, $date);
+            $model->AddHours($userid, $projectid, $minuteSum, $date);
 
             $this->ReturnView($model->Add($userid), true);
         }

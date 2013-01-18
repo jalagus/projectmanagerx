@@ -36,15 +36,15 @@ class Loader {
                 if (method_exists($this->controller, $this->action)) {
                     return new $this->controller($this->action, $this->urlvalues);
                 } else {
-                    return new Error("badUrl", $this->urlvalues);
+                    return new Error("BadUrl", $this->urlvalues);
                 }
             } 
             else {
-                return new Error("badUrl", $this->urlvalues);
+                return new Error("BadUrl", $this->urlvalues);
             }
         } 
         else {
-            return new Error("badUrl", $this->urlvalues);
+            return new Error("BadUrl", $this->urlvalues);
         }
     }
 

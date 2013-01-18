@@ -36,8 +36,14 @@ class HoursModel extends BaseModel {
     }
     
     public function AddHours($userid, $projectid, $minutes, $date) {
-        $query = $this->database->prepare("INSERT INTO hours (userid, projectid, minutes, date) VALUES (?, ?, ?, ?)");
-        $query->execute(array($userid, $projectid, $minutes, $date));           
+        $i = 0;
+        
+        while (isset($projectid[$i])) {
+            $query = $this->database->prepare("INSERT INTO hours (userid, projectid, minutes, date) VALUES (?, ?, ?, ?)");
+            $query->execute(array($userid, $projectid[$i], $minutes[$i], $date[$i])); 
+            
+            $i++;
+        }
     }
     
     public function Delete($hoursid) {

@@ -12,15 +12,23 @@
         <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.10.0.custom.min.css">
 
         <script src="/js/jquery-1.9.0.min.js"></script>
+        <script src="/js/tiny_mce/tiny_mce.js"></script>        
         <script src="/js/jquery.dataTables.min.js"></script>
         <script src="/js/jquery-ui-1.10.0.custom.min.js"></script>
         <script>
             $(function() {
                 $(".dateInput").datepicker({ dateFormat: 'yy-mm-dd' }); 
+                
                 $("#datatable").dataTable({
                     "bJQueryUI": true
                 });
+                
                 $("#navigation").buttonset();
+                
+                tinyMCE.init({
+                    mode : "textareas",
+                    theme : "simple"
+                });
             });
         </script>        
     </head>

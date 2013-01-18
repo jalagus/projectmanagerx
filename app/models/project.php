@@ -3,11 +3,7 @@
 class ProjectModel extends BaseModel {
 
     public function Index($userid) {
-        $query = $this->database->prepare("SELECT
-            SUM(hours.minutes) AS minutes, projects.id AS projectid, projects.name AS projectname
-            FROM projects, hours 
-            WHERE projects.id = hours.projectid AND hours.userid = ?
-            GROUP BY projects.id");
+        $query = $this->database->prepare("SELECT name AS projectname, id AS projectid FROM projects WHERE userid = ?");
         
         $query->execute(array($userid)); 
         
@@ -15,6 +11,12 @@ class ProjectModel extends BaseModel {
         
         $i = 0;
         while ($row = $query->fetchObject("HoursViewmodel")) {
+            $minuteQuery = $this->database->prepare("SELECT SUM(minutes) AS minutes FROM hours WHERE projectid = ? GROUP BY projectid");
+            $minuteQuery->execute(array($row->projectid));
+            $project = $minuteQuery->fetch();
+            
+            $row->minutes = $project['minutes'];
+            
             $projectlist[$i++] = $row;
         }
         
@@ -38,7 +40,30 @@ class ProjectModel extends BaseModel {
         $query = $this->database->prepare("DELETE FROM hours WHERE projectid = ?");
         $query->execute(array($projectid));
     }
+    
+    public function View($id) {
+        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ?");
+        $query->execute(array($id));
+        
+        $project = $query->fetchObject("ProjectViewmodel");
 
+        return $project;
+    }
+
+    public function Edit($id) {
+        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ?");
+        $query->execute(array($id));
+        
+        $project = $query->fetchObject("ProjectViewmodel");
+
+        return $project;        
+    }
+    
+    public function Update($id, $name, $description) {
+        
+        $query = $this->database->prepare("UPDATE projects SET name = ?, description = ? WHERE id = ?");
+        $query->execute(array($name, $description, $id));
+    }
 }
 
 ?>

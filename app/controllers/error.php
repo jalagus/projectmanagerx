@@ -2,9 +2,10 @@
 
 class Error extends BaseController {
 
-    public function badUrl() {
-        echo "Badabum!";
-    }
+    protected function BadUrl() {        
+        $this->ReturnView("", true);
+    }    
+
 }
 
 ?>

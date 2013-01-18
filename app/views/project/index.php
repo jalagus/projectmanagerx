@@ -4,6 +4,7 @@
     <td>Project</td>
     <td>Minutes</td>
     <td>Delete</td>
+    <td>Edit</td>
     </thead>
 <?php
     
@@ -11,11 +12,13 @@
         
         echo "<tr>";
         
-        echo '<td>' . $project->projectname . '</td><td>' . $project->minutes . '</td>
+        echo '<td> <a href="/project/view/' . $project->projectid . '">' . $project->projectname . '</a></td><td>' . $project->minutes . '</td>
             <td><form action="/project/delete" method="POST"> 
             <input type="hidden" name="projectid" value="' . $project->projectid . '" />
-            <input type="submit" value="Delete" /></form></td>';
-        
+            <input type="submit" value="Delete" /></form></td>
+            
+            <td><a href="/project/edit/' . $project->projectid . '"> Edit </a></td>';
+            
         echo "</tr>";
     }
 ?>
