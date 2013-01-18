@@ -9,6 +9,7 @@ class Hours extends BaseController {
         
         $this->ReturnView($viewmodel->Index($userid), true);
     }
+    
     protected function Add() {
         $userid = $_SESSION['userid'];
         
@@ -39,12 +40,22 @@ class Hours extends BaseController {
     }
     
     protected function Delete() {
-        $hoursId = $_POST['hoursid'];
-        
-        $model = new HoursModel();
-        $model->Delete($hoursId);
-        
-        $this->ReturnView("", true);
+                
+        if (isset($_POST['hoursid'])) {
+            $hoursId = $_POST['hoursid'];
+
+            $model = new HoursModel();
+            $model->Delete($hoursId);
+
+            $this->Redirect("hours", "index");
+        }
+        else {
+            $hoursId = $_GET['id'];
+            
+            $viewmodel = new HoursModel();
+            
+            $this->ReturnView($viewmodel->ConfirmDelete($hoursId), true);
+        }        
     }
 }
 

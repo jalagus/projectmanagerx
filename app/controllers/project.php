@@ -25,12 +25,22 @@ class Project extends BaseController {
     }
 
     protected function Delete() {
-        $projectId = $_POST['projectid'];
+        if (isset($_POST['projectid'])) {
+            $projectId = $_POST['projectid'];
 
-        $model = new ProjectModel();
-        $model->Delete($projectId);
+            $model = new ProjectModel();
+            $model->Delete($projectId);
 
-        $this->ReturnView("", true);
+            $this->Redirect("project", "index");
+        }
+        else {
+            $projectId = $_GET['id'];
+            
+            $viewmodel = new ProjectModel();
+            
+            $this->ReturnView($viewmodel->ConfirmDelete($projectId), true);
+        }
+
     }
 
     protected function View() {

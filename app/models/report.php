@@ -10,7 +10,7 @@ class ReportModel extends BaseModel {
         $query = $this->database->prepare("SELECT 
             projects.name AS projectname, hours.minutes AS minutes, hours.date AS date
             FROM hours, projects WHERE projects.id = hours.projectid AND hours.userid = ? 
-            AND hours.date > ? AND hours.date < ? ORDER BY hours.date DESC");
+            AND hours.date >= ? AND hours.date <= ? ORDER BY hours.date DESC");
         
         $query->execute(array($userid, $startDate, $endDate)); 
         
@@ -21,7 +21,12 @@ class ReportModel extends BaseModel {
             $hourslist[$i++] = $hoursObject;
         }
         
-        return $hourslist;        
+        $reportModel = new ReportViewmodel();
+        $reportModel->enddate = $endDate;
+        $reportModel->startdate = $startDate;
+        $reportModel->resultlist = $hourslist;
+        
+        return $reportModel;        
     }
 
 }

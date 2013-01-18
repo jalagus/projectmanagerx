@@ -50,6 +50,19 @@ class HoursModel extends BaseModel {
         $query = $this->database->prepare("DELETE FROM hours WHERE id = ?");
         $query->execute(array($hoursid));        
     }
+    
+    public function ConfirmDelete($hoursid) {
+        $query = $this->database->prepare("SELECT 
+            projects.name AS projectname, hours.minutes AS minutes, hours.date AS date, hours.id AS id
+            FROM hours, projects 
+            WHERE hours.projectid = projects.id AND hours.id = ?");
+        
+        $query->execute(array($hoursid));
+        
+        $hours = $query->fetchObject("HoursViewmodel");
+
+        return $hours;        
+    }
 }
 
 ?>

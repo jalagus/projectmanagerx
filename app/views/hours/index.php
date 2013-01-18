@@ -15,11 +15,18 @@ foreach ($viewmodel as $hours) {
 
     echo '<td>' . $hours->date . '</td><td>' . $hours->projectname . '</td>
                 <td>' . $hours->minutes . '</td>
-                <td><form action="/hours/delete" method="POST"> 
-                <input type="hidden" name="hoursid" value="' . $hours->id . '" />
-                <input type="submit" value="Delete" /></form></td>';
+                <td><button class="deleteButton" data-hoursid="' . $hours->id . '"> Delete </button></td>';
 
     echo "</tr>";
 }
 ?>
 </table>
+
+<script>
+
+    $(".deleteButton").click(function() {
+        
+        window.location = "/hours/delete/" + $(this).data('hoursid');
+    });
+    
+</script>

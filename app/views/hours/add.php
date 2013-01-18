@@ -23,8 +23,9 @@
         <td><input type="text" name="minutes[]" /></td>
         <td><input class="dateInput" type="text" name="date[]" /></td>
     </table>
-    <a id="addRow" href="#" > Add row </a>
-    <input type="submit" value="Add hours" />
+    <button id="addRow"> Add row </button>
+    <br/>
+    <input type="submit" value="Save rows" />
 </form>
 
 <script>

@@ -1,5 +1,8 @@
 <?php
 
+// Config
+require("config.php");
+
 // Base classes
 require("classes/loader.php");
 require("classes/basecontroller.php");
@@ -14,9 +17,10 @@ require("models/hours.php");
 require("models/report.php");
 require("models/user.php");
 
-// Viewmodels
+// Specific viewmodels
 require("models/projectviewmodel.php");
 require("models/hoursviewmodel.php");
+require("models/reportviewmodel.php");
 
 // Controllers
 require("controllers/home.php");

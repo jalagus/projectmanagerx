@@ -28,6 +28,15 @@ class ProjectModel extends BaseModel {
         $query->execute(array($userid, $projectName, $projectDescription));     
     }
     
+    public function ConfirmDelete($projectid) {
+        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ?");
+        $query->execute(array($projectid));
+        
+        $project = $query->fetchObject("ProjectViewmodel");
+
+        return $project;        
+    }
+    
     public function Delete($projectid) {
         
         // This should check, if the user is allowed to do the deletion

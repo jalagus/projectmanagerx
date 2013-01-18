@@ -2,14 +2,14 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Project Manager X</title>
+        <title><?php echo BASE_NAME; ?></title>
         <meta name="description" content="Project Manager X">
         <meta name="author" content="Jarkko Lagus">
 
-        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="<?php echo MAIN_STYLE_FILE; ?>">
         <link rel="stylesheet" href="/css/jquery.dataTables.css">
         <link rel="stylesheet" href="/css/jquery.dataTables_themeroller.css">
-        <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.10.0.custom.min.css">
+        <link rel="stylesheet" href="<?php echo JQUERY_UI_THEME_FILE; ?>">
 
         <script src="/js/jquery-1.9.0.min.js"></script>
         <script src="/js/tiny_mce/tiny_mce.js"></script>        
@@ -29,6 +29,13 @@
                     mode : "textareas",
                     theme : "simple"
                 });
+
+                $("button, .button" ).button().click(function( event ) {
+                    event.preventDefault();
+                });
+                
+                $( "input[type=submit], input[type=reset]" ).button();   
+                
             });
         </script>        
     </head>
@@ -36,7 +43,7 @@
 
         <div id="container">
             <div id="header">
-                <h1> Project Manager X </h1>
+                <h1> <?php echo BASE_NAME; ?> </h1>
             </div>
             <div id="navigation">
                 <ul>

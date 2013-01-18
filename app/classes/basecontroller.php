@@ -25,6 +25,10 @@ abstract class BaseController {
             require($viewloc);
         }
     }
+    
+    protected function Redirect($controller, $action) {
+        header("Location: /" . $controller . "/" . $action . "/");
+    }
 
 }
 

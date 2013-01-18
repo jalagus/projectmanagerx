@@ -1,9 +1,18 @@
-<h2> Generate report </h2>
+<h2> Report </h2>
 
 <form action="/report/show" method="POST">
-    Start date<br/>
-    <input class="dateInput" type="text" name="startDate" /><br/>
-    End date<br/>
-    <input class="dateInput" type="text" name="endDate" /><br/>
-    <input type="submit" value="Get report" />
+    <table>
+        <thead>
+        <td>Start date</td>
+        <td>End date</td>
+        <td></td>
+        </thead>
+        
+        <tr>
+            <td><input class="dateInput" type="text" name="startDate" /></td>
+            <td><input class="dateInput" type="text" name="endDate" /></td>
+            <td><input type="submit" value="Get report" /></td>
+        </tr>
+
+    </table>
 </form>
