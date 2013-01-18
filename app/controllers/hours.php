@@ -6,6 +6,7 @@ class Hours extends BaseController {
         $userid = $_SESSION['userid'];
         
         $viewmodel = new HoursModel();
+        
         $this->ReturnView($viewmodel->Index($userid), true);
     }
     protected function Add() {

@@ -1,5 +1,5 @@
 <h2> Project list </h2>
-<table>
+<table id="datatable">
     <thead>
     <td>Project</td>
     <td>Minutes</td>

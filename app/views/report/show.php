@@ -1,6 +1,6 @@
 <h2> Report </h2>
 
-<table>
+<table id="datatable">
     <thead>
     <td>Date</td>
     <td>Project</td>

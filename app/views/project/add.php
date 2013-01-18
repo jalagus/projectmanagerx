@@ -12,7 +12,7 @@ Name <br/>
 <input type="text" name="projectName" /><br/>
 
 Description<br/>
-<textarea name="projectDescription">
+<textarea name="projectDescription" style="width: 600px; height: 200px;">
 
 </textarea><br/>
 
