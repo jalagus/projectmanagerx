@@ -53,6 +53,6 @@
                     <li><a href="/project/add">Add project</a></li>
                     <li><a href="/project/">List projects</a></li>    
                     <li><a href="/report/">Generate reports</a></li>
-                    <li><a href="/authentication/logout">Logout</a></li>
+                    <li><a id="logoutButton" href="/authentication/logout">Logout</a></li>
                 </ul>               
             </div>

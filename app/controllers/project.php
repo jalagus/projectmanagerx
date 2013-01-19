@@ -25,11 +25,13 @@ class Project extends BaseController {
     }
 
     protected function Delete() {
+        $userid = $_SESSION['userid'];
+        
         if (isset($_POST['projectid'])) {
             $projectId = $_POST['projectid'];
 
             $model = new ProjectModel();
-            $model->Delete($projectId);
+            $model->Delete($userid, $projectId);
 
             $this->Redirect("project", "index");
         }
@@ -38,21 +40,23 @@ class Project extends BaseController {
             
             $viewmodel = new ProjectModel();
             
-            $this->ReturnView($viewmodel->ConfirmDelete($projectId), true);
+            $this->ReturnView($viewmodel->ConfirmDelete($userid, $projectId), true);
         }
 
     }
 
     protected function View() {
         $projectId = $_GET['id'];
+        $userid = $_SESSION['userid'];
 
         $model = new ProjectModel();
 
-        $this->ReturnView($model->View($projectId), true);
+        $this->ReturnView($model->View($userid, $projectId), true);
     }
 
     protected function Edit() {
         $projectId = $_GET['id'];
+        $userid = $_SESSION['userid'];
 
         if (isset($_POST['projectId'])) {
             $projectId = $_POST['projectId'];
@@ -60,13 +64,13 @@ class Project extends BaseController {
             $description = $_POST['projectDescription'];
 
             $model = new ProjectModel();
-            $model->Update($projectId, $name, $description);
+            $model->Update($userid, $projectId, $name, $description);
         }
 
         $viewmodel = new ProjectModel();
-        $this->ReturnView($viewmodel->Edit($projectId), true);
+                
+        $this->ReturnView($viewmodel->Edit($userid, $projectId), true);
     }
-
 }
 
 ?>

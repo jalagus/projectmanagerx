@@ -5,6 +5,7 @@
     <td>Date</td>
     <td>Project</td>
     <td>Minutes</td>
+    <td>Description</td>    
     <td>Delete</td>
 </thead>
 
@@ -15,6 +16,7 @@ foreach ($viewmodel as $hours) {
 
     echo '<td>' . $hours->date . '</td><td>' . $hours->projectname . '</td>
                 <td>' . $hours->minutes . '</td>
+                <td>' . $hours->description . '</td>
                 <td><button class="deleteButton" data-hoursid="' . $hours->id . '"> Delete </button></td>';
 
     echo "</tr>";

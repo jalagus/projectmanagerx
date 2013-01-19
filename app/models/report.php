@@ -8,7 +8,8 @@ class ReportModel extends BaseModel {
     
     public function Show($userid, $startDate, $endDate) {
         $query = $this->database->prepare("SELECT 
-            projects.name AS projectname, hours.minutes AS minutes, hours.date AS date
+            projects.name AS projectname, hours.minutes AS minutes, 
+            hours.date AS date, hours.description AS description
             FROM hours, projects WHERE projects.id = hours.projectid AND hours.userid = ? 
             AND hours.date >= ? AND hours.date <= ? ORDER BY hours.date DESC");
         

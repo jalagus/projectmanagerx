@@ -7,6 +7,7 @@ class HoursViewmodel {
     public $projectid;
     public $minutes;
     public $date;
+    public $description;
 
 }
 

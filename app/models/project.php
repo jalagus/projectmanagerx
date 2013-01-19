@@ -28,47 +28,45 @@ class ProjectModel extends BaseModel {
         $query->execute(array($userid, $projectName, $projectDescription));     
     }
     
-    public function ConfirmDelete($projectid) {
-        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ?");
-        $query->execute(array($projectid));
+    public function ConfirmDelete($userid, $projectid) {
+        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ? AND userid = ?");
+        $query->execute(array($projectid, $userid));
         
         $project = $query->fetchObject("ProjectViewmodel");
 
         return $project;        
     }
     
-    public function Delete($projectid) {
-        
-        // This should check, if the user is allowed to do the deletion
-        
+    public function Delete($userid, $projectid) {
+                
         // Delete project
-        $query = $this->database->prepare("DELETE FROM projects WHERE id = ?");
-        $query->execute(array($projectid));
+        $query = $this->database->prepare("DELETE FROM projects WHERE id = ? AND userid = ?");
+        $query->execute(array($projectid, $userid));
         
         // Delete added hours
-        $query = $this->database->prepare("DELETE FROM hours WHERE projectid = ?");
-        $query->execute(array($projectid));
+        $query = $this->database->prepare("DELETE FROM hours WHERE projectid = ? AND userid = ?");
+        $query->execute(array($projectid, $userid));
     }
     
-    public function View($id) {
-        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ?");
-        $query->execute(array($id));
+    public function View($userid, $id) {
+        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ? AND userid = ?");
+        $query->execute(array($id, $userid));
         
         $project = $query->fetchObject("ProjectViewmodel");
 
         return $project;
     }
 
-    public function Edit($id) {
-        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ?");
-        $query->execute(array($id));
+    public function Edit($userid, $id) {
+        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ? AND userid = ?");
+        $query->execute(array($id, $userid));
         
         $project = $query->fetchObject("ProjectViewmodel");
 
         return $project;        
     }
     
-    public function Update($id, $name, $description) {
+    public function Update($userid, $id, $name, $description) {
         
         $query = $this->database->prepare("UPDATE projects SET name = ?, description = ? WHERE id = ?");
         $query->execute(array($name, $description, $id));

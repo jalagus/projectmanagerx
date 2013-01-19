@@ -1,5 +1,7 @@
 <h2> Add hours to project </h2>
 
+<p> More rows can be added with the plus sign at the end of the last row. </p>
+
 <form action="/hours/add" method="POST">
 
     <table id="hoursForm">
@@ -8,7 +10,10 @@
         <td>Hours</td>
         <td>Minutes</td>
         <td>Date</td>
+        <td>Short description</td>
+        <td></td>
         </thead>
+        <tr>
         <td>
             <select name="projectid[]">
                 <?php
@@ -22,16 +27,34 @@
         <td><input type="text" name="hours[]" /></td>
         <td><input type="text" name="minutes[]" /></td>
         <td><input class="dateInput" type="text" name="date[]" /></td>
+        <td><input type="text" name="description[]" /></td>
+        </tr>
+        
+        <tr>
+        <td>
+            <select name="projectid[]" disabled >
+                <?php
+                foreach ($viewmodel as $row) {
+                    echo '<option value="' . $row->id . '">' . $row->name . "</option>";
+                }
+                ?>
+            </select>
+        </td>
+
+        <td><input type="text" name="hours[]" disabled /></td>
+        <td><input type="text" name="minutes[]" disabled /></td>
+        <td><input class="dateInput" type="text" name="date[]" disabled /></td>
+        <td><input type="text" name="description[]" disabled /></td>
+        <td><button class="ui-icon ui-icon-plus" id="addRow"> New </button></td>
+        </tr>        
     </table>
-    <button id="addRow"> Add row </button>
-    <br/>
     <input type="submit" value="Save rows" />
 </form>
 
 <script>
     $('#addRow').click(function (event) {
         event.preventDefault();
-        $('#hoursForm').append('<tr><td><select name="projectid[]">' +
+        $("#hoursForm tr").last().before('<tr><td><select name="projectid[]">' +
                 <?php
                 foreach ($viewmodel as $row) {
                     echo '\'<option value="' . $row->id . '">' . $row->name . '</option>\' + ' . "\n";
@@ -41,7 +64,7 @@
             '<td><input type="text" name="hours[]" /></td>' +
             '<td><input type="text" name="minutes[]" /></td>' +
             '<td><input class="dateInput" type="text" name="date[]" /></td>' +
-            '</tr>');
+            '<td><input type="text" name="description[]" /></td></tr>');
         
         $(".dateInput").datepicker({ dateFormat: 'yy-mm-dd' });
     });

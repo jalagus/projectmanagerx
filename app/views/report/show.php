@@ -22,11 +22,13 @@
     <td>Date</td>
     <td>Project</td>
     <td>Minutes</td>
+    <td>Description</td>    
 </thead>
 <?php
 foreach ($viewmodel->resultlist as $hours) {
     echo "<tr>";
-    echo "<td>" . $hours->date . "</td><td>" . $hours->projectname . "</td><td>" . $hours->minutes . "</td>";
+    echo "<td>" . $hours->date . "</td><td>" . $hours->projectname . "</td><td>" . 
+            $hours->minutes . "</td><td>" . $hours->description . "</td>";
     echo "</tr>";
 }
 ?>
