@@ -66,10 +66,9 @@ class ProjectModel extends BaseModel {
         return $project;        
     }
     
-    public function Update($userid, $id, $name, $description) {
-        
-        $query = $this->database->prepare("UPDATE projects SET name = ?, description = ? WHERE id = ?");
-        $query->execute(array($name, $description, $id));
+    public function Update($userid, $id, $name, $description) {       
+        $query = $this->database->prepare("UPDATE projects SET name = ?, description = ? WHERE id = ? AND userid = ?");
+        $query->execute(array($name, $description, $id, $userid));
     }
 }
 

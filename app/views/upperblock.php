@@ -68,3 +68,4 @@
                     <li><a id="logoutButton" href="<?php echo BASE_DIR; ?>authentication/logout">Logout</a></li>
                 </ul>               
             </div>
+            <div id="content">

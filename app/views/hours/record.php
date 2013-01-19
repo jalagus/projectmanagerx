@@ -1,7 +1,23 @@
 <h2> Record </h2>
-<a href="#" id="startRecord"> Start </a>
-<div id="status"></div>
-<div id="time"></div>
+
+<p class="helptext"> Choose the project you want to record hours. You can record 
+    hours only for one project at the same time and after you have recorded the hours, you have to confirm them to project. </p>
+
+<p class="helptext"><b> Notice! </b> You can't change the page while recording. </p>
+
+<div id="recordTable">
+    <select name="projectid">
+        <?php
+        foreach ($viewmodel as $row) {
+            echo '<option value="' . $row->id . '">' . $row->name . "</option>";
+        }
+        ?>
+    </select>
+
+    <input type="text" placeholder="Short work description..." name="description" />
+    <button id="startRecord"> Record </button>  
+    <span id="time">0 seconds</span>
+</div>
 
 <script>
     var running = false;
@@ -13,8 +29,16 @@
         event.preventDefault();
         
         if (running == false) {
+            $('#navigation a').click(function (event) {
+                event.preventDefault();
+
+                alert("Stop recording first!");
+            });     
+            
             if (recordId == -1) {
                 $.post("<?php echo BASE_DIR; ?>hours/getrecordid",
+                {   description: $('input[name="description"]').val(),
+                    projectid: $('select[name="projectid"]').val() },
                 function (data) {
                     recordId = data;
                 });                
@@ -22,13 +46,27 @@
             
             timer = setInterval(function(){myTimer()},1000);
             running = true;
-            $('#startRecord').html("Stop");
+            $('#startRecord').addClass("recording");
         }
         else {
-            $('#startRecord').html("Start");            
+            $('#navigation a').off('click'); 
+            
+            $('#startRecord').removeClass("recording");            
             window.clearInterval(timer);
             running = false;
         }
+    });
+    
+    $('select[name="projectid"]').change(function() {
+        $('#navigation a').off('click'); 
+    
+        time = 0;
+        recordId = -1;
+        running = false;
+        $('input[name="description"]').val("");
+        window.clearInterval(timer);
+        $('#startRecord').removeClass("recording");
+        $('#time').html("0 seconds");
     });
     
     function myTimer()
@@ -37,7 +75,8 @@
         
         if (time % 60 == 0) {
             $.post("<?php echo BASE_DIR; ?>hours/saverecordedhours", 
-            { projectid: '1', minutes: (time / 60), recordid: recordId },
+            {   minutes: (time / 60), 
+                recordid: recordId },
             
             function (data) {
                 $('#status').html(data);
@@ -61,24 +100,13 @@
     }
 </script>
 
-
-<p>Previously recorded, unassigned hours</p>
+<h2>Unconfirmed hours</h2>
 
 <table id="datatable">
     <thead>
-    <td>Project</td>
-    <td>Minutes</td>
-    <td>Date</td>
-    <td></td>
-</thead>
-<?php
-foreach ($viewmodel as $record) {
-    echo '<tr><td>' . $record->projectid . '</td>
-            <td>' . $record->minutes . '</td>
-                <td>' . $record->date . '</td>
-                    <td><button> Assign to project </button></td></tr>';
-}
-?>
+        <td>Project</td>
+        <td>Date</td>
+        <td>Minutes</td>
+        <td></td>
+    </thead>
 </table>
-
-

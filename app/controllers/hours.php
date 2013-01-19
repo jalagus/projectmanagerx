@@ -71,22 +71,23 @@ class Hours extends BaseController {
     }
     
     protected function SaveRecordedHours() {
-        $projectid = $_POST['projectid'];
         $minutes = $_POST['minutes'];
         $recordid = $_POST['recordid'];
         $userid = $_SESSION['userid'];
         
         $model = new HoursModel(); 
         
-        echo $model->SaveRecordedHours($userid, $recordid, $projectid, $minutes);
+        echo $model->SaveRecordedHours($userid, $recordid, $minutes);
     }
     
     protected function getRecordId() {
         $userid = $_SESSION['userid'];
+        $projectid = $_POST['projectid'];
+        $description = $_POST['description'];
         
         $model = new HoursModel(); 
         
-        echo $model->getRecordId($userid);        
+        echo $model->getRecordId($userid, $projectid, $description);        
     }
 }
 
