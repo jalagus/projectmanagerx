@@ -8,27 +8,27 @@
     <td>Description</td>    
     <td>Delete</td>
 </thead>
+<tbody>
+    <?php
+    foreach ($viewmodel as $hours) {
 
-<?php
-foreach ($viewmodel as $hours) {
+        echo "<tr>";
 
-    echo "<tr>";
-
-    echo '<td>' . $hours->date . '</td><td>' . $hours->projectname . '</td>
+        echo '<td>' . $hours->date . '</td><td>' . $hours->projectname . '</td>
                 <td>' . $hours->minutes . '</td>
                 <td>' . $hours->description . '</td>
                 <td><button class="deleteButton" data-hoursid="' . $hours->id . '"> Delete </button></td>';
 
-    echo "</tr>";
-}
-?>
+        echo "</tr>";
+    }
+    ?>
+</tbody>
 </table>
 
 <script>
 
     $(".deleteButton").click(function() {
-        
-        window.location = "/hours/delete/" + $(this).data('hoursid');
+        window.location = "<?php echo BASE_DIR; ?>hours/delete/" + $(this).data('hoursid');
     });
     
 </script>

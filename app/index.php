@@ -16,11 +16,13 @@ require("models/authentication.php");
 require("models/hours.php");
 require("models/report.php");
 require("models/user.php");
+require("models/record.php");
 
 // Specific viewmodels
 require("models/projectviewmodel.php");
 require("models/hoursviewmodel.php");
 require("models/reportviewmodel.php");
+require("models/recordviewmodel.php");
 
 // Controllers
 require("controllers/home.php");

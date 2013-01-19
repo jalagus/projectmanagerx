@@ -5,13 +5,14 @@
     <td>Time</td>
     <td>Action</td>
     </thead>
+    <tbody>
 <?php
     
     foreach($viewmodel as $project) {
         
         echo "<tr>";
         
-        echo '<td> <a href="/project/view/' . $project->projectid . '">' . $project->projectname . '</a></td>
+        echo '<td> <a href="'. BASE_DIR . 'project/view/' . $project->projectid . '">' . $project->projectname . '</a></td>
             <td>' . floor($project->minutes / 60)  . ' hours ' . floor($project->minutes % 60) . ' minutes </td>
             <td>
             <button class="deleteButton" data-projectid="' . $project->projectid . '"> Delete </button>
@@ -21,16 +22,17 @@
         echo "</tr>";
     }
 ?>
+    </tbody>
 </table>
 
 <script>
     $(".editButton").click(function() {
-        window.location = "/project/edit/" + $(this).data('projectid');
+        window.location = "<?php echo BASE_DIR; ?>project/edit/" + $(this).data('projectid');
     });
     
     $(".deleteButton").click(function() {
         
-        window.location = "/project/delete/" + $(this).data('projectid');
+        window.location = "<?php echo BASE_DIR; ?>project/delete/" + $(this).data('projectid');
     });
     
 </script>

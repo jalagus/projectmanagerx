@@ -1,6 +1,6 @@
 <h2> Report </h2>
 
-<form action="/report/show" method="POST">
+<form action="<?php echo BASE_DIR; ?>report/show" method="POST">
     <table>
         <thead>
         <td>Start date</td>

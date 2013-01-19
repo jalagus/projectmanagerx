@@ -6,7 +6,7 @@
     }
 ?>
 
-<form action="/project/add" method="POST">
+<form action="<?php echo BASE_DIR; ?>project/add" method="POST">
 
 Name <br/>
 <input type="text" name="projectName" /><br/>

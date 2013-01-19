@@ -40,8 +40,10 @@ class HoursModel extends BaseModel {
         $i = 0;
         
         while (isset($projectid[$i])) {
-            $query = $this->database->prepare("INSERT INTO hours (userid, projectid, minutes, date, description) VALUES (?, ?, ?, ?, ?)");
-            $query->execute(array($userid, $projectid[$i], $minutes[$i], $date[$i], $description[$i])); 
+            if ($minutes[$i] > 0) {
+                $query = $this->database->prepare("INSERT INTO hours (userid, projectid, minutes, date, description) VALUES (?, ?, ?, ?, ?)");
+                $query->execute(array($userid, $projectid[$i], $minutes[$i], $date[$i], $description[$i])); 
+            }
             
             $i++;
         }
@@ -63,6 +65,35 @@ class HoursModel extends BaseModel {
         $hours = $query->fetchObject("HoursViewmodel");
 
         return $hours;        
+    }
+    
+    public function getRecordData($userid) {
+        $recordData = array();
+
+        // Get unassigned, but recorded data
+        $query = $this->database->prepare("SELECT * FROM recordedhours WHERE userid = ?"); 
+        $query->execute(array($userid));       
+
+        $i = 0;
+        while ($recordObject = $query->fetchObject("Record")) {
+            $recordData[$i] = $recordObject;
+            $i++;
+        }
+        
+        return $recordData;
+    }
+    
+    public function getRecordId($userid) {
+        $query = $this->database->prepare("INSERT INTO recordedhours (userid, date) VALUES (?, CURDATE() )"); 
+        $query->execute(array($userid));       
+        return $this->database->lastInsertId();        
+    }
+    
+    public function SaveRecordedHours($userid, $recordid, $projectid, $minutes) {
+        $query = $this->database->prepare("UPDATE recordedhours SET minutes = ?, projectid = ? WHERE userid = ? AND id = ?");
+        $query->execute(array($minutes, $projectid, $userid, $recordid));
+        
+        return "Data saved...";
     }
 }
 

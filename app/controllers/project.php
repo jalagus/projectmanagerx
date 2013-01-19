@@ -46,8 +46,8 @@ class Project extends BaseController {
     }
 
     protected function View() {
-        $projectId = $_GET['id'];
-        $userid = $_SESSION['userid'];
+        $projectId =    $_GET['id'];
+        $userid =       $_SESSION['userid'];
 
         $model = new ProjectModel();
 
@@ -55,13 +55,13 @@ class Project extends BaseController {
     }
 
     protected function Edit() {
-        $projectId = $_GET['id'];
-        $userid = $_SESSION['userid'];
+        $projectId =    $_GET['id'];
+        $userid =       $_SESSION['userid'];
 
         if (isset($_POST['projectId'])) {
-            $projectId = $_POST['projectId'];
-            $name = $_POST['projectName'];
-            $description = $_POST['projectDescription'];
+            $projectId =    $_POST['projectId'];
+            $name =         $_POST['projectName'];
+            $description =  $_POST['projectDescription'];
 
             $model = new ProjectModel();
             $model->Update($userid, $projectId, $name, $description);

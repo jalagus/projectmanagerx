@@ -29,6 +29,7 @@ class Hours extends BaseController {
             // Transform hours to minutes
             while (isset($hours[$i])) {
                 $minuteSum[$i] = ($hours[$i] * 60) + $minutes[$i];
+                
                 $i++;
             }
             
@@ -59,6 +60,33 @@ class Hours extends BaseController {
             
             $this->ReturnView($viewmodel->ConfirmDelete($userid, $hoursId), true);
         }        
+    }
+    
+    protected function Record() {
+        $userid = $_SESSION['userid'];
+        
+        $model = new HoursModel();
+        
+        $this->ReturnView($model->getRecordData($userid), true);
+    }
+    
+    protected function SaveRecordedHours() {
+        $projectid = $_POST['projectid'];
+        $minutes = $_POST['minutes'];
+        $recordid = $_POST['recordid'];
+        $userid = $_SESSION['userid'];
+        
+        $model = new HoursModel(); 
+        
+        echo $model->SaveRecordedHours($userid, $recordid, $projectid, $minutes);
+    }
+    
+    protected function getRecordId() {
+        $userid = $_SESSION['userid'];
+        
+        $model = new HoursModel(); 
+        
+        echo $model->getRecordId($userid);        
     }
 }
 

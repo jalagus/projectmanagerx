@@ -1,6 +1,6 @@
 <h2> Edit project </h2>
 
-<form action="/project/edit" method="POST">
+<form action="<?php echo BASE_DIR; ?>project/edit" method="POST">
 
 <input type="hidden" name="projectId" value="<?php echo $viewmodel->id; ?>" />
     

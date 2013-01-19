@@ -2,7 +2,7 @@
 
 <p> More rows can be added with the plus sign at the end of the last row. </p>
 
-<form action="/hours/add" method="POST">
+<form action="<?php echo BASE_DIR; ?>hours/add" method="POST">
 
     <table id="hoursForm">
         <thead>
@@ -44,7 +44,7 @@
         <td><input type="text" name="hours[]" disabled /></td>
         <td><input type="text" name="minutes[]" disabled /></td>
         <td><input class="dateInput" type="text" name="date[]" disabled /></td>
-        <td><input type="text" name="description[]" disabled /></td>
+        <td><input class="disabledRow" type="text" name="description[]" disabled /></td>
         <td><button class="ui-icon ui-icon-plus" id="addRow"> New </button></td>
         </tr>        
     </table>
