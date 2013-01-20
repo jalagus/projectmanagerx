@@ -3,8 +3,11 @@
 class Record {
 
     public $id;
-    public $userid;
     public $projectid;
+    public $projectname;
+    
+    public $description;
+    
     public $minutes;
     public $date;
 

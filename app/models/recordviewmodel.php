@@ -2,7 +2,7 @@
 
 class RecordViewmodel {
 
-    public $recordId;
+    public $projectList;
     public $recordList;
 
 }

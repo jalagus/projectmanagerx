@@ -68,19 +68,33 @@ class HoursModel extends BaseModel {
     }
     
     public function getRecordData($userid) {
-        $projectData = array();
+        $recordViewmodel = new RecordViewmodel();
 
-        // Get unassigned, but recorded data
+        // Get project list
         $query = $this->database->prepare("SELECT * FROM projects WHERE userid = ?"); 
         $query->execute(array($userid));       
 
         $i = 0;
         while ($projectObject = $query->fetchObject("ProjectViewmodel")) {
-            $projectData[$i] = $projectObject;
+            $recordViewmodel->projectList[$i] = $projectObject;
             $i++;
         }
         
-        return $projectData;
+        // Get unassigned, but recorded data
+        $query = $this->database->prepare("SELECT r.id AS id, r.minutes AS minutes, 
+            r.date AS date, p.name AS projectname
+            FROM recordedhours AS r, projects AS p 
+            WHERE r.projectid = p.id AND r.userid = ?");
+        
+        $query->execute(array($userid));       
+
+        $i = 0;
+        while ($recordObject = $query->fetchObject("Record")) {
+            $recordViewmodel->recordList[$i] = $recordObject;
+            $i++;
+        }   
+        
+        return $recordViewmodel;
     }
     
     public function getRecordId($userid, $projectid, $description) {
@@ -95,6 +109,27 @@ class HoursModel extends BaseModel {
         $query->execute(array($minutes, $userid, $recordid));
         
         return date("H:i:s");
+    }
+    
+    
+    public function ConfirmRecordedHours($userid, $recordid) {
+        $query = $this->database->prepare("SELECT * FROM recordedhours WHERE userid = ? AND id = ?");
+        $query->execute(array($userid, $recordid));
+        
+        $record = $query->fetchObject("Record");
+        
+        $query = $this->database->prepare("INSERT INTO hours (userid, projectid, minutes, date, description)
+            VALUES (?, ?, ?, ?, ?)");
+        
+        $query->execute(array($userid, $record->projectid, 
+            $record->minutes, $record->date, $record->description));
+        
+        $this->DeleteRecordedHours($userid, $recordid);
+    }
+    
+    public function DeleteRecordedHours($userid, $recordid) {
+        $query = $this->database->prepare("DELETE FROM recordedhours WHERE userid = ? AND id = ?");
+        $query->execute(array($userid, $recordid));        
     }
 }
 

@@ -89,6 +89,24 @@ class Hours extends BaseController {
         
         echo $model->getRecordId($userid, $projectid, $description);        
     }
+    
+    protected function DeleteRecordedHours() {
+        $userid = $_SESSION['userid'];
+        $recordid = $_POST['recordid'];    
+        
+        $model = new HoursModel();
+        
+        $model->DeleteRecordedHours($userid, $recordid);
+    }
+    
+    protected function ConfirmRecordedHours() {
+        $userid = $_SESSION['userid'];
+        $recordid = $_POST['recordid']; 
+        
+        $model = new HoursModel();
+
+        $model->ConfirmRecordedHours($userid, $recordid);
+    }
 }
 
 ?>

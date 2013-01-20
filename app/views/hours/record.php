@@ -8,7 +8,7 @@
 <div id="recordTable">
     <select name="projectid">
         <?php
-        foreach ($viewmodel as $row) {
+        foreach ($viewmodel->projectList as $row) {
             echo '<option value="' . $row->id . '">' . $row->name . "</option>";
         }
         ?>
@@ -18,6 +18,28 @@
     <button id="startRecord"> Record </button>  
     <span id="time">0 seconds</span>
 </div>
+
+<h2>Unconfirmed hours</h2>
+
+<table id="datatable">
+    <thead>
+        <td>Project</td>
+        <td>Date</td>
+        <td>Minutes</td>
+        <td></td>
+    </thead>
+        <?php
+        foreach ($viewmodel->recordList as $row) {
+            echo '<tr>';
+            echo '<td>' . $row->projectname . '</td>';
+            echo '<td>' . $row->date . '</td>';
+            echo '<td>' . $row->minutes . '</td>';
+            echo '<td>  <button class="confirmButton" data-recordid="' . $row->id . '">Confirm</button> 
+                        <button class="deleteButton" data-recordid="' . $row->id . '">Delete</button> </td>';
+            echo '</tr>';
+        }
+        ?>
+</table>
 
 <script>
     var running = false;
@@ -35,6 +57,8 @@
                 alert("Stop recording first!");
             });     
             
+            $("body").addClass("recordingBodyBG");
+            
             if (recordId == -1) {
                 $.post("<?php echo BASE_DIR; ?>hours/getrecordid",
                 {   description: $('input[name="description"]').val(),
@@ -50,6 +74,7 @@
         }
         else {
             $('#navigation a').off('click'); 
+            $("body").removeClass("recordingBodyBG");
             
             $('#startRecord').removeClass("recording");            
             window.clearInterval(timer);
@@ -71,7 +96,7 @@
     
     function myTimer()
     {
-        time += 10;
+        time += 1;
         
         if (time % 60 == 0) {
             $.post("<?php echo BASE_DIR; ?>hours/saverecordedhours", 
@@ -98,15 +123,22 @@
         }
 
     }
+    
+    $(".deleteButton").click(function () {
+        
+        $.post("<?php echo BASE_DIR; ?>hours/deleterecordedhours", 
+            { recordid: $(this).data('recordid') },
+            function() {
+                alert("Deleted!");
+        });
+    });
+    
+    $(".confirmButton").click(function () {
+        $.post("<?php echo BASE_DIR; ?>hours/confirmrecordedhours", 
+            { recordid: $(this).data('recordid') },
+            function() {
+                alert("Confirmed!");
+        });    
+    });    
+    
 </script>
-
-<h2>Unconfirmed hours</h2>
-
-<table id="datatable">
-    <thead>
-        <td>Project</td>
-        <td>Date</td>
-        <td>Minutes</td>
-        <td></td>
-    </thead>
-</table>
