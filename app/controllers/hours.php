@@ -57,8 +57,13 @@ class Hours extends BaseController {
             $hoursId = $_GET['id'];
             
             $viewmodel = new HoursModel();
-            
-            $this->ReturnView($viewmodel->ConfirmDelete($userid, $hoursId), true);
+                        
+            try {
+                $this->ReturnView($viewmodel->ConfirmDelete($userid, $hoursId), true);
+            }
+            catch (Exception $ex) {
+                $this->Redirect("error", "wrongprojectid");
+            }            
         }        
     }
     
@@ -67,7 +72,14 @@ class Hours extends BaseController {
         
         $model = new HoursModel();
         
-        $this->ReturnView($model->getRecordData($userid), true);
+        $viewmodelData = $model->getRecordData($userid);
+        
+        try {
+            $this->ReturnView($viewmodelData, true);
+        }
+        catch (Exception $ex) {
+            $this->ReturnViewWithError($viewmodelData, $ex->getMessage(), true);
+        }
     }
     
     protected function SaveRecordedHours() {
@@ -77,7 +89,12 @@ class Hours extends BaseController {
         
         $model = new HoursModel(); 
         
-        echo $model->SaveRecordedHours($userid, $recordid, $minutes);
+        try {
+            echo $model->SaveRecordedHours($userid, $recordid, $minutes);
+        }
+        catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
     }
     
     protected function getRecordId() {

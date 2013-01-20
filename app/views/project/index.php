@@ -12,11 +12,11 @@
         
         echo "<tr>";
         
-        echo '<td> <a href="'. BASE_DIR . 'project/view/' . $project->projectid . '">' . $project->projectname . '</a></td>
+        echo '<td> <a href="'. BASE_DIR . 'project/view/' . $project->id . '">' . $project->name . '</a></td>
             <td>' . floor($project->minutes / 60)  . ' hours ' . floor($project->minutes % 60) . ' minutes </td>
             <td>
-            <button class="deleteButton" data-projectid="' . $project->projectid . '"> Delete </button>
-            <button class="editButton" data-projectid="' . $project->projectid . '"> Edit </button>
+            <button class="deleteButton" data-projectid="' . $project->id . '"> Delete </button>
+            <button class="editButton" data-projectid="' . $project->id . '"> Edit </button>
                 </td>';
             
         echo "</tr>";

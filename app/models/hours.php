@@ -3,37 +3,15 @@
 class HoursModel extends BaseModel {
 
     public function Index($userid) {
-        $query = $this->database->prepare("SELECT 
-            projects.name AS projectname, hours.minutes AS minutes, 
-            hours.date AS date, hours.id AS id, hours.description AS description
-            FROM hours, projects 
-            WHERE hours.projectid = projects.id AND hours.userid = ?
-            ORDER BY hours.date DESC");
+        $hoursViewmodel = new HoursViewmodel($this->database);
         
-        $query->execute(array($userid)); 
-        
-        $hourslist = array();
-        
-        $i = 0;
-        while ($hoursObject = $query->fetchObject("HoursViewmodel")) {
-            $hourslist[$i++] = $hoursObject;
-        }
-        
-        return $hourslist;
+        return $hoursViewmodel->getList($userid);;
     }
     
     public function Add($userid) {
-        $query = $this->database->prepare("SELECT * FROM projects WHERE userid = ?");
-        $query->execute(array($userid)); 
-        
-        $projectlist = array();
-        
-        $i = 0;
-        while ($row = $query->fetchObject("ProjectViewmodel")) {
-            $projectlist[$i++] = $row;
-        }
-        
-        return $projectlist;
+        $projectModel = new ProjectViewmodel($this->database);
+
+        return $projectModel->getList($userid);
     }
     
     public function AddHours($userid, $projectid, $minutes, $date, $description) {
@@ -43,6 +21,10 @@ class HoursModel extends BaseModel {
             if ($minutes[$i] > 0) {
                 $query = $this->database->prepare("INSERT INTO hours (userid, projectid, minutes, date, description) VALUES (?, ?, ?, ?, ?)");
                 $query->execute(array($userid, $projectid[$i], $minutes[$i], $date[$i], $description[$i])); 
+                
+                if ($query == false) {
+                    throw new Exception("Error on saving data");
+                }
             }
             
             $i++;
@@ -51,48 +33,27 @@ class HoursModel extends BaseModel {
     
     public function Delete($userid, $hoursid) {
         $query = $this->database->prepare("DELETE FROM hours WHERE id = ? AND userid = ?");
-        $query->execute(array($hoursid, $userid));        
+        $query->execute(array($hoursid, $userid));  
+        
+        if ($query == false) {
+            throw new Exception("Error on delete");
+        }
     }
     
     public function ConfirmDelete($userid, $hoursid) {
-        $query = $this->database->prepare("SELECT 
-            projects.name AS projectname, hours.minutes AS minutes, hours.date AS date, hours.id AS id
-            FROM hours, projects 
-            WHERE hours.projectid = projects.id AND hours.id = ? AND hours.userid = ?");
-        
-        $query->execute(array($hoursid, $userid));
-        
-        $hours = $query->fetchObject("HoursViewmodel");
+        $hoursViewmodel = new HoursViewmodel($this->database);
 
-        return $hours;        
+        return $hoursViewmodel->getById($userid, $hoursid);        
     }
     
     public function getRecordData($userid) {
+        $recordModel = new Record($this->database);
+        $projectModel = new ProjectViewmodel($this->database);
+
         $recordViewmodel = new RecordViewmodel();
 
-        // Get project list
-        $query = $this->database->prepare("SELECT * FROM projects WHERE userid = ?"); 
-        $query->execute(array($userid));       
-
-        $i = 0;
-        while ($projectObject = $query->fetchObject("ProjectViewmodel")) {
-            $recordViewmodel->projectList[$i] = $projectObject;
-            $i++;
-        }
-        
-        // Get unassigned, but recorded data
-        $query = $this->database->prepare("SELECT r.id AS id, r.minutes AS minutes, 
-            r.date AS date, p.name AS projectname
-            FROM recordedhours AS r, projects AS p 
-            WHERE r.projectid = p.id AND r.userid = ?");
-        
-        $query->execute(array($userid));       
-
-        $i = 0;
-        while ($recordObject = $query->fetchObject("Record")) {
-            $recordViewmodel->recordList[$i] = $recordObject;
-            $i++;
-        }   
+        $recordViewmodel->projectList = $projectModel->getList($userid);        
+        $recordViewmodel->recordList = $recordModel->getList($userid);     
         
         return $recordViewmodel;
     }
@@ -100,23 +61,31 @@ class HoursModel extends BaseModel {
     public function getRecordId($userid, $projectid, $description) {
         $query = $this->database->prepare("INSERT INTO recordedhours (userid, projectid, description, date) VALUES (?, ?, ?, CURDATE() )"); 
         $query->execute(array($userid, $projectid, $description)); 
-        
-        return $this->database->lastInsertId();        
+
+        if ($query == false) {
+            throw new Exception("Error on getting ID");
+        }
+        else {        
+            return $this->database->lastInsertId();        
+        }
     }
     
     public function SaveRecordedHours($userid, $recordid, $minutes) {
         $query = $this->database->prepare("UPDATE recordedhours SET minutes = ? WHERE userid = ? AND id = ?");
         $query->execute(array($minutes, $userid, $recordid));
         
-        return date("H:i:s");
+        if ($query == false) {
+            throw new Exception("Error on saving");
+        }
+        else {
+            return date("H:i:s");
+        }
     }
     
-    
     public function ConfirmRecordedHours($userid, $recordid) {
-        $query = $this->database->prepare("SELECT * FROM recordedhours WHERE userid = ? AND id = ?");
-        $query->execute(array($userid, $recordid));
+        $recordModel = new Record($this->database);
         
-        $record = $query->fetchObject("Record");
+        $record = $recordModel->getById($userid, $recordid);
         
         $query = $this->database->prepare("INSERT INTO hours (userid, projectid, minutes, date, description)
             VALUES (?, ?, ?, ?, ?)");
@@ -124,12 +93,20 @@ class HoursModel extends BaseModel {
         $query->execute(array($userid, $record->projectid, 
             $record->minutes, $record->date, $record->description));
         
+        if ($query == false) {
+            throw new Exception("Error on confirm");
+        }
+        
         $this->DeleteRecordedHours($userid, $recordid);
     }
     
     public function DeleteRecordedHours($userid, $recordid) {
         $query = $this->database->prepare("DELETE FROM recordedhours WHERE userid = ? AND id = ?");
         $query->execute(array($userid, $recordid));        
+        
+        if ($query == false) {
+            throw new Exception("Error on delete");
+        }
     }
 }
 

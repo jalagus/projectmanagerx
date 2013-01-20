@@ -29,7 +29,18 @@ abstract class BaseController {
     protected function Redirect($controller, $action) {
         header("Location: /" . $controller . "/" . $action . "/");
     }
-
+    
+    protected function ReturnViewWithError($viewmodel, $error, $fullview) {
+        $viewloc = 'views/' . get_class($this) . '/' . $this->action . '.php';
+        
+        if ($fullview) {
+            require('views/upperblock.php');
+            require($viewloc);
+            require('views/lowerblock.php');
+        } else {
+            require($viewloc);
+        }
+    }
 }
 
 ?>

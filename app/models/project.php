@@ -2,25 +2,10 @@
 
 class ProjectModel extends BaseModel {
 
-    public function Index($userid) {
-        $query = $this->database->prepare("SELECT name AS projectname, id AS projectid FROM projects WHERE userid = ?");
+    public function Index($userid) { 
+        $model = new ProjectViewmodel($this->database);
         
-        $query->execute(array($userid)); 
-        
-        $projectlist = array();
-        
-        $i = 0;
-        while ($row = $query->fetchObject("HoursViewmodel")) {
-            $minuteQuery = $this->database->prepare("SELECT SUM(minutes) AS minutes FROM hours WHERE projectid = ? GROUP BY projectid");
-            $minuteQuery->execute(array($row->projectid));
-            $project = $minuteQuery->fetch();
-            
-            $row->minutes = $project['minutes'];
-            
-            $projectlist[$i++] = $row;
-        }
-        
-        return $projectlist;
+        return $model->getList($userid);
     }
     
     public function Add($userid, $projectName, $projectDescription) {
