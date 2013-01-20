@@ -1,7 +1,7 @@
 <h2> Record </h2>
 
 <p class="helptext"> Choose the project you want to record hours. You can record 
-    hours only for one project at the same time and after you have recorded the hours, you have to confirm them to project. </p>
+    hours only for one project at the same time. After you have recorded the hours, you have to confirm them to project. </p>
 
 <p class="helptext"><b> Notice! </b> You can't change the page while recording. </p>
 
@@ -26,6 +26,7 @@
         <td>Project</td>
         <td>Date</td>
         <td>Minutes</td>
+        <td>Description</td>
         <td></td>
     </thead>
         <?php
@@ -34,6 +35,7 @@
             echo '<td>' . $row->projectname . '</td>';
             echo '<td>' . $row->date . '</td>';
             echo '<td>' . $row->minutes . '</td>';
+            echo '<td>' . $row->description . '</td>';
             echo '<td>  <button class="confirmButton" data-recordid="' . $row->id . '">Confirm</button> 
                         <button class="deleteButton" data-recordid="' . $row->id . '">Delete</button> </td>';
             echo '</tr>';
@@ -125,18 +127,23 @@
     }
     
     $(".deleteButton").click(function () {
+        var pressed = this;
         
         $.post("<?php echo BASE_DIR; ?>hours/deleterecordedhours", 
             { recordid: $(this).data('recordid') },
             function() {
+                $(pressed).closest('tr').remove();
                 alert("Deleted!");
         });
     });
     
     $(".confirmButton").click(function () {
+        var pressed = this;
+        
         $.post("<?php echo BASE_DIR; ?>hours/confirmrecordedhours", 
             { recordid: $(this).data('recordid') },
             function() {
+                $(pressed).closest('tr').remove();
                 alert("Confirmed!");
         });    
     });    

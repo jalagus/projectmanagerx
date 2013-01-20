@@ -42,15 +42,7 @@ class ProjectViewmodel {
         
         $query->execute(array($userid, $projectid)); 
         
-        $projectlist = array();
-        
-        $i = 0;
-        while ($row = $query->fetchObject("ProjectViewmodel")) {
-            $projectlist[$i] = $row;
-            $i++;
-        }
-        
-        return $projectlist;        
+        return $query->fetchObject("ProjectViewmodel");        
     }   
 }
 

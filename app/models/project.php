@@ -34,7 +34,7 @@ class ProjectModel extends BaseModel {
     }
     
     public function View($userid, $id) {
-        return $this->projectViewmodel->getById($userid, $id);  
+        return $this->projectViewmodel->getById($userid, $id);
     }
 
     public function Edit($userid, $id) {

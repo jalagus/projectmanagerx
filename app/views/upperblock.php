@@ -8,6 +8,7 @@
         
         <link rel="stylesheet" href="<?php echo MAIN_STYLE_FILE; ?>">
         <link rel="stylesheet" href="<?php echo JQUERY_UI_THEME_FILE; ?>">
+        <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/viewstyles.css">
         
         <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/jquery.dataTables.css">
         <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/jquery.dataTables_themeroller.css">
