@@ -14,8 +14,8 @@
         echo "<tr>";
         
         echo '<td>' . $project->name . '</td>
-            <td>' . floor($project->minutes / 60)  . ' hours ' . floor($project->minutes % 60) . ' minutes </td>
-            <td>
+            <td style="width: 200px">' . floor($project->minutes / 60)  . ' hours ' . floor($project->minutes % 60) . ' minutes </td>
+            <td style="width: 170px">
             <button class="viewButton" data-projectid="' . $project->id . '"> View </button>
             <button class="editButton" data-projectid="' . $project->id . '"> Edit </button>
             <button class="deleteButton" data-projectid="' . $project->id . '"> Delete </button>

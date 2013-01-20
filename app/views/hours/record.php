@@ -67,9 +67,31 @@
                     projectid: $('select[name="projectid"]').val() },
                 function (data) {
                     recordId = data;
-                });                
+                });       
+                
+                // Add row to datatable
+                var projectname = $('select[name="projectid"] option[value="' + $('select[name="projectid"]').val() + '"]').text();
+                var date = new Date();
+                
+                $('#datatable').dataTable().fnAddData( [
+                    projectname,
+                    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
+                    "Refresh to see",
+                    $('input[name="description"]').val(),
+                    '<button class="confirmButton" data-recordid="' + recordId + '">Confirm</button> ' + 
+                    '<button class="deleteButton" data-recordid="' + recordId + '">Delete</button>']
+                );            
+
+                $("button, .button" ).button().click(function( event ) {
+                    event.preventDefault();
+                });
+
+                $( "input[type=submit], input[type=reset]" ).button(); 
             }
-            
+
+
+
+                
             timer = setInterval(function(){myTimer()},1000);
             running = true;
             $('#startRecord').addClass("recording");
@@ -132,7 +154,9 @@
         $.post("<?php echo BASE_DIR; ?>hours/deleterecordedhours", 
             { recordid: $(this).data('recordid') },
             function() {
-                $(pressed).closest('tr').remove();
+                var index = $(pressed).closest('tr').index();
+                $("#datatable").dataTable().fnDeleteRow( index );
+                
                 alert("Deleted!");
         });
     });
@@ -143,7 +167,9 @@
         $.post("<?php echo BASE_DIR; ?>hours/confirmrecordedhours", 
             { recordid: $(this).data('recordid') },
             function() {
-                $(pressed).closest('tr').remove();
+                var index = $(pressed).closest('tr').index();
+                $("#datatable").dataTable().fnDeleteRow( index );
+
                 alert("Confirmed!");
         });    
     });    

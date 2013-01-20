@@ -18,7 +18,8 @@ class ProjectViewmodel {
             SELECT SUM(h.minutes) AS minutes, p.id AS id, p.name AS name, p.description AS description
             FROM hours AS h, projects AS p
             WHERE p.id = h.projectid AND h.userid = ? 
-            GROUP BY p.id");
+            GROUP BY p.id
+            ORDER BY p.name ASC");
         
         $query->execute(array($userid)); 
         
