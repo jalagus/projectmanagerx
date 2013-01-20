@@ -2,11 +2,7 @@
 
 class ReportModel extends BaseModel {
 
-    public function Index() {
-        return array("Reports!", "And more!");
-    }
-    
-    public function Show($userid, $startDate, $endDate) {
+    public function Index($userid, $startDate, $endDate) {
         $query = $this->database->prepare("SELECT 
             projects.name AS projectname, hours.minutes AS minutes, 
             hours.date AS date, hours.description AS description
@@ -27,7 +23,7 @@ class ReportModel extends BaseModel {
         $reportModel->startdate = $startDate;
         $reportModel->resultlist = $hourslist;
         
-        return $reportModel;        
+        return $reportModel; 
     }
 
 }

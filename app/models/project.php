@@ -1,11 +1,17 @@
 <?php
 
 class ProjectModel extends BaseModel {
+    
+    private $projectViewmodel;
 
-    public function Index($userid) { 
-        $model = new ProjectViewmodel($this->database);
+    public function __construct() {
+        parent::__construct();    
         
-        return $model->getList($userid);
+        $this->projectViewmodel = new ProjectViewmodel($this->database);
+    }
+
+    public function Index($userid) {         
+        return $this->projectViewmodel->getList($userid);
     }
     
     public function Add($userid, $projectName, $projectDescription) {
@@ -13,17 +19,11 @@ class ProjectModel extends BaseModel {
         $query->execute(array($userid, $projectName, $projectDescription));     
     }
     
-    public function ConfirmDelete($userid, $projectid) {
-        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ? AND userid = ?");
-        $query->execute(array($projectid, $userid));
-        
-        $project = $query->fetchObject("ProjectViewmodel");
-
-        return $project;        
+    public function ConfirmDelete($userid, $id) {
+        return $this->projectViewmodel->getById($userid, $id);      
     }
     
-    public function Delete($userid, $projectid) {
-                
+    public function Delete($userid, $projectid) { 
         // Delete project
         $query = $this->database->prepare("DELETE FROM projects WHERE id = ? AND userid = ?");
         $query->execute(array($projectid, $userid));
@@ -34,21 +34,11 @@ class ProjectModel extends BaseModel {
     }
     
     public function View($userid, $id) {
-        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ? AND userid = ?");
-        $query->execute(array($id, $userid));
-        
-        $project = $query->fetchObject("ProjectViewmodel");
-
-        return $project;
+        return $this->projectViewmodel->getById($userid, $id);  
     }
 
     public function Edit($userid, $id) {
-        $query = $this->database->prepare("SELECT * FROM projects WHERE id = ? AND userid = ?");
-        $query->execute(array($id, $userid));
-        
-        $project = $query->fetchObject("ProjectViewmodel");
-
-        return $project;        
+        return $this->projectViewmodel->getById($userid, $id);        
     }
     
     public function Update($userid, $id, $name, $description) {       

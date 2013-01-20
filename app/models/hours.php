@@ -2,16 +2,22 @@
 
 class HoursModel extends BaseModel {
 
-    public function Index($userid) {
-        $hoursViewmodel = new HoursViewmodel($this->database);
+    private $projectViewmodel;
+    private $hoursViewmodel;
+    
+    public function __construct() {
+        parent::__construct();    
         
-        return $hoursViewmodel->getList($userid);;
+        $this->projectViewmodel = new ProjectViewmodel($this->database);
+        $this->hoursViewmodel = new HoursViewmodel($this->database);
+    }    
+    
+    public function Index($userid) {        
+        return $this->hoursViewmodel->getList($userid);;
     }
     
     public function Add($userid) {
-        $projectModel = new ProjectViewmodel($this->database);
-
-        return $projectModel->getList($userid);
+        return $this->projectViewmodel->getList($userid);
     }
     
     public function AddHours($userid, $projectid, $minutes, $date, $description) {
@@ -41,18 +47,15 @@ class HoursModel extends BaseModel {
     }
     
     public function ConfirmDelete($userid, $hoursid) {
-        $hoursViewmodel = new HoursViewmodel($this->database);
-
-        return $hoursViewmodel->getById($userid, $hoursid);        
+        return $this->hoursViewmodel->getById($userid, $hoursid);        
     }
     
     public function getRecordData($userid) {
         $recordModel = new Record($this->database);
-        $projectModel = new ProjectViewmodel($this->database);
-
+        
         $recordViewmodel = new RecordViewmodel();
 
-        $recordViewmodel->projectList = $projectModel->getList($userid);        
+        $recordViewmodel->projectList = $this->projectViewmodel->getList($userid);        
         $recordViewmodel->recordList = $recordModel->getList($userid);     
         
         return $recordViewmodel;
