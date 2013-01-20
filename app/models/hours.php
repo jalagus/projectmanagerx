@@ -78,7 +78,7 @@ class HoursModel extends BaseModel {
         $query->execute(array($minutes, $userid, $recordid));
         
         if ($query == false) {
-            throw new Exception("Error on saving");
+            return false;
         }
         else {
             return date("H:i:s");
@@ -97,7 +97,7 @@ class HoursModel extends BaseModel {
             $record->minutes, $record->date, $record->description));
         
         if ($query == false) {
-            throw new Exception("Error on confirm");
+            return false;
         }
         
         $this->DeleteRecordedHours($userid, $recordid);
@@ -105,11 +105,8 @@ class HoursModel extends BaseModel {
     
     public function DeleteRecordedHours($userid, $recordid) {
         $query = $this->database->prepare("DELETE FROM recordedhours WHERE userid = ? AND id = ?");
-        $query->execute(array($userid, $recordid));        
         
-        if ($query == false) {
-            throw new Exception("Error on delete");
-        }
+        return $query->execute(array($userid, $recordid));        
     }
 }
 

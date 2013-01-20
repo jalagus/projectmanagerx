@@ -16,7 +16,8 @@ class ProjectModel extends BaseModel {
     
     public function Add($userid, $projectName, $projectDescription) {
         $query = $this->database->prepare("INSERT INTO projects (userid, name, description) VALUES (?, ?, ?)");
-        $query->execute(array($userid, $projectName, $projectDescription));     
+        
+        return $query->execute(array($userid, $projectName, $projectDescription));     
     }
     
     public function ConfirmDelete($userid, $id) {

@@ -58,11 +58,13 @@ class Hours extends BaseController {
             
             $viewmodel = new HoursModel();
                         
-            try {
-                $this->ReturnView($viewmodel->ConfirmDelete($userid, $hoursId), true);
+            $viewdata = $viewmodel->ConfirmDelete($userid, $hoursId);
+            
+            if ($viewdata != false) {
+                $this->ReturnView($viewdata, true);
             }
-            catch (Exception $ex) {
-                $this->Redirect("error", "wrongprojectid");
+            else {
+                $this->ReturnError("Cannot find project!");
             }            
         }        
     }
@@ -72,13 +74,13 @@ class Hours extends BaseController {
         
         $model = new HoursModel();
         
-        $viewmodelData = $model->getRecordData($userid);
+        $viewdata = $model->getRecordData($userid);
         
-        try {
-            $this->ReturnView($viewmodelData, true);
+        if ($viewdata != false) {
+            $this->ReturnView($viewdata, true);
         }
-        catch (Exception $ex) {
-            $this->ReturnViewWithError($viewmodelData, $ex->getMessage(), true);
+        else {
+            $this->ReturnError("Could not load records!");
         }
     }
     
@@ -89,11 +91,13 @@ class Hours extends BaseController {
         
         $model = new HoursModel(); 
         
-        try {
-            echo $model->SaveRecordedHours($userid, $recordid, $minutes);
+        $viewdata = $model->SaveRecordedHours($userid, $recordid, $minutes);
+        
+        if ($viewdata != false) {
+            echo $viewdata;
         }
-        catch (Exception $ex) {
-            echo $ex->getMessage();
+        else  {
+            echo "Error saving data..";
         }
     }
     

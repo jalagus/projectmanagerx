@@ -30,16 +30,12 @@ abstract class BaseController {
         header("Location: /" . $controller . "/" . $action . "/");
     }
     
-    protected function ReturnViewWithError($viewmodel, $error, $fullview) {
-        $viewloc = 'views/' . get_class($this) . '/' . $this->action . '.php';
-        
-        if ($fullview) {
-            require('views/upperblock.php');
-            require($viewloc);
-            require('views/lowerblock.php');
-        } else {
-            require($viewloc);
-        }
+    protected function ReturnError($viewmodel) {
+        $viewloc = 'views/error/error.php';
+
+        require('views/upperblock.php');
+        require($viewloc);
+        require('views/lowerblock.php');
     }
 }
 

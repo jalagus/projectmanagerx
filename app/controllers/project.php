@@ -5,6 +5,7 @@ class Project extends BaseController {
     protected function Index() {
         $viewmodel = new ProjectModel();
         $userid = $_SESSION['userid'];
+        
         $this->ReturnView($viewmodel->Index($userid), true);
     }
 
@@ -18,9 +19,14 @@ class Project extends BaseController {
 
             $model = new ProjectModel();
 
-            $model->Add($userid, $projectName, $projectDescription);
-
-            $this->ReturnView("Project added!", true);
+            $result = $model->Add($userid, $projectName, $projectDescription);
+            
+            if ($result != false) {
+                $this->ReturnView("Project added!", true);
+            }
+            else {
+                $this->ReturnView("Project was not added due error!", true);                
+            }
         }
     }
 
@@ -40,18 +46,31 @@ class Project extends BaseController {
             
             $viewmodel = new ProjectModel();
             
-            $this->ReturnView($viewmodel->ConfirmDelete($userid, $projectId), true);
+            $viewdata = $viewmodel->ConfirmDelete($userid, $projectId);
+            
+            if ($viewdata != false) {
+                $this->ReturnView($viewdata, true);
+            }
+            else {
+                $this->ReturnError("Could not find selected project");
+            }
         }
-
     }
 
     protected function View() {
         $projectId =    $_GET['id'];
         $userid =       $_SESSION['userid'];
 
-        $model = new ProjectModel();
-
-        $this->ReturnView($model->View($userid, $projectId), true);
+        $viewmodel = new ProjectModel();
+        
+        $viewdata = $viewmodel->View($userid, $projectId);
+        
+        if ($viewdata != false) {
+            $this->ReturnView($viewdata, true);
+        }
+        else {
+            $this->ReturnError("Cannot find project!");
+        }        
     }
 
     protected function Edit() {
@@ -68,8 +87,14 @@ class Project extends BaseController {
         }
 
         $viewmodel = new ProjectModel();
-                
-        $this->ReturnView($viewmodel->Edit($userid, $projectId), true);
+        $viewdata = $viewmodel->Edit($userid, $projectId);
+        
+        if ($viewdata != false) {
+            $this->ReturnView($viewdata, true);
+        }
+        else {
+            $this->ReturnError("Cannot find project!");
+        }
     }
 }
 
