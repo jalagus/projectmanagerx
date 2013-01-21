@@ -27,7 +27,6 @@ require("models/recordviewmodel.php");
 // DBModels
 require("models/database/hoursdbmodel.php");
 require("models/database/projectdbmodel.php");
-require("models/database/recordsdbmodel.php");
 
 // Controllers
 require("controllers/home.php");
