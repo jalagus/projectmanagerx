@@ -62,7 +62,7 @@
             $("body").addClass("recordingBodyBG");
             
             if (recordId == -1) {
-                $.post("<?php echo BASE_DIR; ?>hours/getrecordid",
+                $.post("<?php echo BASE_DIR; ?>record/getrecordid",
                 {   description: $('input[name="description"]').val(),
                     projectid: $('select[name="projectid"]').val() },
                 function (data) {
@@ -123,7 +123,7 @@
         time += 1;
         
         if (time % 60 == 0) {
-            $.post("<?php echo BASE_DIR; ?>hours/saverecordedhours", 
+            $.post("<?php echo BASE_DIR; ?>record/saverecordedhours", 
             {   minutes: (time / 60), 
                 recordid: recordId },
             
@@ -151,7 +151,7 @@
     $(".deleteButton").click(function () {
         var pressed = this;
         
-        $.post("<?php echo BASE_DIR; ?>hours/deleterecordedhours", 
+        $.post("<?php echo BASE_DIR; ?>record/deleterecordedhours", 
             { recordid: $(this).data('recordid') },
             function() {
                 var index = $(pressed).closest('tr').index();
@@ -164,7 +164,7 @@
     $(".confirmButton").click(function () {
         var pressed = this;
         
-        $.post("<?php echo BASE_DIR; ?>hours/confirmrecordedhours", 
+        $.post("<?php echo BASE_DIR; ?>record/confirmrecordedhours", 
             { recordid: $(this).data('recordid') },
             function() {
                 var index = $(pressed).closest('tr').index();

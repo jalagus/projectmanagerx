@@ -15,9 +15,12 @@ class ProjectModel extends BaseModel {
     }
     
     public function Add($userid, $projectName, $projectDescription) {
-        $query = $this->database->prepare("INSERT INTO projects (userid, name, description) VALUES (?, ?, ?)");
+        $projectObj = new ProjectDBModel($userid, $projectName, $projectDescription);
         
-        return $query->execute(array($userid, $projectName, $projectDescription));     
+        $query = $this->database->prepare("INSERT INTO projects (id, userid, name, description) 
+            VALUES (:id, :userid, :name, :description)");
+        
+        return $query->execute((array) $projectObj);     
     }
     
     public function ConfirmDelete($userid, $id) {
@@ -25,13 +28,14 @@ class ProjectModel extends BaseModel {
     }
     
     public function Delete($userid, $projectid) { 
-        // Delete project
-        $query = $this->database->prepare("DELETE FROM projects WHERE id = ? AND userid = ?");
-        $query->execute(array($projectid, $userid));
-        
         // Delete added hours
         $query = $this->database->prepare("DELETE FROM hours WHERE projectid = ? AND userid = ?");
         $query->execute(array($projectid, $userid));
+        
+        // Delete project
+        $query = $this->database->prepare("DELETE FROM projects WHERE id = ? AND userid = ?");
+        $query->execute(array($projectid, $userid));
+
     }
     
     public function View($userid, $id) {

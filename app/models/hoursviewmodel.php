@@ -3,6 +3,7 @@
 class HoursViewmodel {
     
     public $id;
+    public $userid;
     public $projectname;
     public $projectid;
     public $minutes;

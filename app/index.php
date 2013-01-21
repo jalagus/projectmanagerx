@@ -24,6 +24,11 @@ require("models/hoursviewmodel.php");
 require("models/reportviewmodel.php");
 require("models/recordviewmodel.php");
 
+// DBModels
+require("models/database/hoursdbmodel.php");
+require("models/database/projectdbmodel.php");
+require("models/database/recordsdbmodel.php");
+
 // Controllers
 require("controllers/home.php");
 require("controllers/error.php");
@@ -31,6 +36,7 @@ require("controllers/project.php");
 require("controllers/authentication.php");
 require("controllers/hours.php");
 require("controllers/report.php");
+require("controllers/record.php");
 
 // Run application
 session_start();

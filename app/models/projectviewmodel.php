@@ -14,19 +14,14 @@ class ProjectViewmodel {
     }       
 
     public function getList($userid) {  
-        $query = $this->database->prepare("
-            SELECT SUM(h.minutes) AS minutes, p.id AS id, p.name AS name, p.description AS description
-            FROM hours AS h, projects AS p
-            WHERE p.id = h.projectid AND h.userid = ? 
-            GROUP BY p.id
-            ORDER BY p.name ASC");
+        $query = $this->database->prepare("SELECT * FROM projects WHERE userid = ? ORDER BY name ASC");
         
         $query->execute(array($userid)); 
         
         $projectlist = array();
         
         $i = 0;
-        while ($row = $query->fetchObject("ProjectViewmodel")) {
+        while ($row = $query->fetchObject("ProjectViewmodel")) {            
             $projectlist[$i] = $row;
             $i++;
         }

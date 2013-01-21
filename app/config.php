@@ -5,6 +5,8 @@ define('BASE_DIR', '/');
 define('BASE_NAME', "Project Manager X");
 
 // Database
+
+define('DB_TYPE','mysql');
 define('DB_PASSWORD','root');
 define('DB_NAME','project_db');
 define('DB_USERNAME','root');

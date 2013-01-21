@@ -1,9 +1,14 @@
 <?php
 
 class RecordViewmodel {
-
-    public $projectList;
-    public $recordList;
+    public $id;
+    public $projectid;
+    public $projectname;
+    
+    public $description;
+    
+    public $minutes;
+    public $date;
 
 }
 

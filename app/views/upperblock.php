@@ -51,7 +51,7 @@
             <div id="navigation">
                 <ul>
                     <li><a href="<?php echo BASE_DIR; ?>home/">Dashboard</a></li>
-                    <li><a href="<?php echo BASE_DIR; ?>hours/record">Record hours</a></li>
+                    <li><a href="<?php echo BASE_DIR; ?>record/">Record hours</a></li>
                     <li><a href="<?php echo BASE_DIR; ?>hours/add">Add hours</a></li>
                     <li><a href="<?php echo BASE_DIR; ?>hours/">List hours</a></li>
                     <li><a href="<?php echo BASE_DIR; ?>project/add">Add project</a></li>

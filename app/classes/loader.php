@@ -6,6 +6,15 @@ class Loader {
     private $action;
     private $urlvalues;
 
+    /* 
+     * Initializes the Loader
+     * 
+     * Initializes the controller with wanted controller and action. 
+     * Checks if the user is logged in and if not, initializes with the 
+     * login controller.
+     * 
+     * @param mixed $urlsvalues values to be used in controller creation
+     */
     public function __construct($urlvalues) {
         $this->urlvalues = $urlvalues;
         
@@ -26,6 +35,11 @@ class Loader {
         }
     }
 
+    /* 
+     * Creates the controller
+     * 
+     * If controller doesn't exist returns error page
+     */
     public function CreateController() {
         if (class_exists($this->controller)) {
             

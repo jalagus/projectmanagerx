@@ -68,66 +68,6 @@ class Hours extends BaseController {
             }            
         }        
     }
-    
-    protected function Record() {
-        $userid = $_SESSION['userid'];
-        
-        $model = new HoursModel();
-        
-        $viewdata = $model->getRecordData($userid);
-        
-        if ($viewdata != false) {
-            $this->ReturnView($viewdata, true);
-        }
-        else {
-            $this->ReturnError("Could not load records!");
-        }
-    }
-    
-    protected function SaveRecordedHours() {
-        $minutes = $_POST['minutes'];
-        $recordid = $_POST['recordid'];
-        $userid = $_SESSION['userid'];
-        
-        $model = new HoursModel(); 
-        
-        $viewdata = $model->SaveRecordedHours($userid, $recordid, $minutes);
-        
-        if ($viewdata != false) {
-            echo $viewdata;
-        }
-        else  {
-            echo "Error saving data..";
-        }
-    }
-    
-    protected function getRecordId() {
-        $userid = $_SESSION['userid'];
-        $projectid = $_POST['projectid'];
-        $description = $_POST['description'];
-        
-        $model = new HoursModel(); 
-        
-        echo $model->getRecordId($userid, $projectid, $description);        
-    }
-    
-    protected function DeleteRecordedHours() {
-        $userid = $_SESSION['userid'];
-        $recordid = $_POST['recordid'];    
-        
-        $model = new HoursModel();
-        
-        $model->DeleteRecordedHours($userid, $recordid);
-    }
-    
-    protected function ConfirmRecordedHours() {
-        $userid = $_SESSION['userid'];
-        $recordid = $_POST['recordid']; 
-        
-        $model = new HoursModel();
-
-        $model->ConfirmRecordedHours($userid, $recordid);
-    }
 }
 
 ?>
