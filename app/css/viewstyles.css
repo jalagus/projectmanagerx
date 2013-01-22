@@ -67,4 +67,7 @@ body.recordingBodyBG {
     background: -ms-linear-gradient(top,  #ffdfe5 0%,#faa8b6 50%,#fc92a4 51%,#febcc7 100%); /* IE10+ */
     background: linear-gradient(to bottom,  #ffdfe5 0%,#faa8b6 50%,#fc92a4 51%,#febcc7 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffdfe5', endColorstr='#febcc7',GradientType=0 ); /* IE6-9 */    
+
+    background-attachment:fixed;
+    background-repeat:no-repeat;   
 }

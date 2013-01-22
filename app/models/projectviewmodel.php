@@ -21,7 +21,10 @@ class ProjectViewmodel {
         $projectlist = array();
         
         $i = 0;
-        while ($row = $query->fetchObject("ProjectViewmodel")) {            
+        while ($row = $query->fetchObject("ProjectViewmodel")) {
+            
+            $row->minutes = $this->getMinutesById($row->id);
+            
             $projectlist[$i] = $row;
             $i++;
         }
@@ -30,16 +33,25 @@ class ProjectViewmodel {
     }    
     
     public function getById($userid, $projectid) {  
-        $query = $this->database->prepare("
-            SELECT SUM(h.minutes) AS minutes, p.id AS id, p.name AS name, p.description AS description
-            FROM hours AS h, projects AS p
-            WHERE p.id = h.projectid AND h.userid = ?  AND p.id = ?
-            GROUP BY p.id");
+        $query = $this->database->prepare("SELECT * FROM projects WHERE userid = ? AND id = ?");
         
         $query->execute(array($userid, $projectid)); 
         
-        return $query->fetchObject("ProjectViewmodel");        
-    }   
+        $project = $query->fetchObject("ProjectViewmodel");
+        $project->minutes = $this->getMinutesById($project->id);
+        
+        return $project;        
+    }
+    
+    private function getMinutesById($projectid) {
+        $query = $this->database->prepare("SELECT SUM(minutes) AS minutes FROM hours 
+            WHERE projectid = ? GROUP BY projectid");
+        $query->execute(array($projectid)); 
+
+        $minutesData = $query->fetch();
+
+        return $minutesData['minutes'];        
+    }
 }
 
 ?>
