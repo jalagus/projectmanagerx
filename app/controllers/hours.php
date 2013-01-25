@@ -42,7 +42,7 @@ class Hours extends BaseController {
 
             $model = new HoursModel();
             
-            $model->AddHours($userid, $projectid, $minuteSum, $date, $description);
+            $this->viewbag = $model->AddHours($userid, $projectid, $minuteSum, $date, $description);
 
             $this->ReturnView($model->Add($userid), true);
         }

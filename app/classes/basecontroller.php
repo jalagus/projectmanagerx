@@ -4,6 +4,8 @@ abstract class BaseController {
 
     protected $urlvalues;
     protected $action;
+    
+    protected $viewbag;
 
     public function __construct($action, $urlvalues) {
         $this->action = $action;
@@ -26,6 +28,8 @@ abstract class BaseController {
      */
     protected function ReturnView($viewmodel, $fullview) {
         $viewloc = 'views/' . get_class($this) . '/' . $this->action . '.php';
+        
+        $viewbag = $this->viewbag;
         
         if ($fullview) {
             require('views/upperblock.php');
@@ -52,7 +56,7 @@ abstract class BaseController {
      * 
      * @param string $viewmodel error message
      */
-    protected function ReturnError($viewmodel) {
+    protected function ReturnError($viewmodel) {        
         $viewloc = 'views/error/error.php';
 
         require('views/upperblock.php');

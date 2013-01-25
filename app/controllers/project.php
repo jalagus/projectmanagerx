@@ -28,12 +28,14 @@ class Project extends BaseController {
             $result = $model->Add($userid, $projectName, $projectDescription);
             
             if ($result != false) {
-                $viewbag = "Error";
-                $this->ReturnView("Project added!", true);
+                $this->viewbag = "Project added!";
+                $this->ReturnView("", true);
             }
             else {
-                $viewbag = "Error";
-                $this->ReturnView("Project was not added due error!", true);                
+                $projectData = new ProjectDBModel($userid, $projectName, $projectDescription);
+                
+                $this->viewbag = "Project was not added due error!";
+                $this->ReturnView($projectData, true);                
             }
         }
     }

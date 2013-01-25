@@ -2,6 +2,12 @@
 
 <p> More rows can be added with the plus sign at the end of the last row. </p>
 
+<?php
+    if (!empty($viewbag)) {
+        echo "<p><b>Notice:</b><br/>" . nl2br($viewbag) . "</p>";
+    }
+?>
+
 <form action="<?php echo BASE_DIR; ?>hours/add" method="POST">
 
     <table id="hoursForm">

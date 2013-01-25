@@ -45,6 +45,8 @@ class HoursModel extends BaseModel {
     public function AddHours($userid, $projectid, $minutes, $date, $description) {
         $i = 0;
         
+        $errorMsg = "";
+        
         while (isset($projectid[$i])) {
             if ($minutes[$i] > 0) {
                 $hoursObj = new HoursDBModel($userid, $projectid[$i], $minutes[$i], $date[$i], $description[$i]);
@@ -55,12 +57,16 @@ class HoursModel extends BaseModel {
                 $query->execute((array) $hoursObj);
                 
                 if ($query == false) {
-                    throw new Exception("Error on saving data");
+                    $errorMsg .= "Row: " . $minutes[$i] . " " . $date[$i] . " " . $description[$i] . " not saved!\n";
                 }
             }
-            
+            else {
+                $errorMsg .= "Row with " . $minutes[$i] . " minutes, dated " . $date[$i] . ": \"" . $description[$i] . "\" not saved! \n";            
+            }
             $i++;
         }
+        
+        return $errorMsg;
     }
     
     /*

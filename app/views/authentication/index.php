@@ -21,7 +21,7 @@ Username<br/>
 Password<br/>
 <input class="rounded" type="password" name="password" /> <br/>
 
-<input class="button" type="submit" value="Login">
+<input class="button" type="submit" value="Register">
 </form>
 
 </div>

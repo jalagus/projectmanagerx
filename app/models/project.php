@@ -30,6 +30,10 @@ class ProjectModel extends BaseModel {
      * @param string $projectDescription description of the project
      */    
     public function Add($userid, $projectName, $projectDescription) {
+        if (empty($userid) || empty($projectName) || empty($projectDescription)) {
+            return false;
+        }
+        
         $projectObj = new ProjectDBModel($userid, $projectName, $projectDescription);
         
         $query = $this->database->prepare("INSERT INTO projects (id, userid, name, description) 
