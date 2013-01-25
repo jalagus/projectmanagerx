@@ -2,9 +2,14 @@
 
 class AuthenticationModel extends BaseModel {
 
+    /*
+     * Checks if login information is correct
+     * 
+     * Returns true if it is correct otherwise returns false
+     */
     public function checkLogin($username, $password) {
         
-        // Uses username as salt
+        // Uses username as a salt
         $hashedSaltedPassword = sha1($username . $password);
         
         $query = $this->database->prepare("SELECT * FROM users WHERE username = ? AND password = ?");

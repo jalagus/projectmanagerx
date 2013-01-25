@@ -2,6 +2,14 @@
 
 class ReportModel extends BaseModel {
 
+    /*
+     * Returns view data used by index view. Returns list of hours between the
+     * start and end dates
+     * 
+     * @param int $userid id of the user asking the data
+     * @param date $startDate start date
+     * @param date $endDate end date
+     */    
     public function Index($userid, $startDate, $endDate) {
         $query = $this->database->prepare("SELECT 
             projects.name AS projectname, hours.minutes AS minutes, 

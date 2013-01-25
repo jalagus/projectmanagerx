@@ -9,10 +9,20 @@ class ProjectViewmodel {
     
     private $database;
     
+    /*
+     * Contructor of the project viewmodel -object
+     * 
+     * @param PDO $database PDO-object of the database
+     */       
     public function __construct($database = null) {
         $this->database = $database;
     }       
 
+    /*
+     * Returns list of all projects
+     * 
+     * @param int $userid id of the user
+     */    
     public function getList($userid) {  
         $query = $this->database->prepare("SELECT * FROM projects WHERE userid = ? ORDER BY name ASC");
         
@@ -32,6 +42,12 @@ class ProjectViewmodel {
         return $projectlist;        
     }    
     
+    /*
+     * Returns one entry of projects by id
+     * 
+     * @param int $userid id of the user
+     * @param int $projectid id of the project to be returned 
+     */     
     public function getById($userid, $projectid) {  
         $query = $this->database->prepare("SELECT * FROM projects WHERE userid = ? AND id = ?");
         
@@ -43,6 +59,11 @@ class ProjectViewmodel {
         return $project;        
     }
     
+    /* 
+     * Returns total minutes of the project by id
+     * 
+     * @param int $projectid id of the project
+     */
     private function getMinutesById($projectid) {
         $query = $this->database->prepare("SELECT SUM(minutes) AS minutes FROM hours 
             WHERE projectid = ? GROUP BY projectid");

@@ -1,8 +1,8 @@
 <h2> Add new project </h2>
 
 <?php
-    if ($viewmodel != "") {
-        echo "<p>" . $viewmodel . "</p>";
+    if (!empty($viewbag)) {
+        echo "<p>" . $viewbag . "</p>";
     }
 ?>
 

@@ -5,6 +5,9 @@ class HoursModel extends BaseModel {
     private $projectViewmodel;
     private $hoursViewmodel;
     
+    /* 
+     * Constructor of the Hours model 
+     */
     public function __construct() {
         parent::__construct();    
         
@@ -12,14 +15,33 @@ class HoursModel extends BaseModel {
         $this->hoursViewmodel = new HoursViewmodel($this->database);
     }    
     
+    /* 
+     * Gets view data for the index view 
+     * 
+     * @param int $userid id of the user
+     */    
     public function Index($userid) {        
         return $this->hoursViewmodel->getList($userid);;
     }
     
+    /* 
+     * Gets view data for the add view 
+     * 
+     * @param int $userid id of the user
+     */    
     public function Add($userid) {
         return $this->projectViewmodel->getList($userid);
     }
     
+    /* 
+     * Saves the hours to database
+     * 
+     * @param int $userid id of the user
+     * @param int $projectid id of the project
+     * @param int $minutes time used on the task
+     * @param date $date date of the work hours
+     * @param string $description work description
+     */
     public function AddHours($userid, $projectid, $minutes, $date, $description) {
         $i = 0;
         
@@ -41,6 +63,12 @@ class HoursModel extends BaseModel {
         }
     }
     
+    /*
+     * Deletes the hours entry from database
+     * 
+     * @param int $userid id of the user
+     * @param int $hoursid id of the hours to be deleted
+     */
     public function Delete($userid, $hoursid) {
         $query = $this->database->prepare("DELETE FROM hours WHERE id = ? AND userid = ?");
         $query->execute(array($hoursid, $userid));  
@@ -50,6 +78,12 @@ class HoursModel extends BaseModel {
         }
     }
     
+    /* 
+     * Gets view data for the delete confirmation view 
+     * 
+     * @param int $userid id of the user
+     * @param int $hoursid id of the hours to be deleted
+     */    
     public function ConfirmDelete($userid, $hoursid) {
         return $this->hoursViewmodel->getById($userid, $hoursid);        
     }

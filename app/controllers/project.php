@@ -2,6 +2,9 @@
 
 class Project extends BaseController {
 
+    /*
+     * Return the index view of the Hours controller
+     */      
     protected function Index() {
         $viewmodel = new ProjectModel();
         $userid = $_SESSION['userid'];
@@ -9,6 +12,9 @@ class Project extends BaseController {
         $this->ReturnView($viewmodel->Index($userid), true);
     }
 
+    /*
+     * Returns add view or saves the project data sent to controller
+     */   
     protected function Add() {
         if (!isset($_POST['projectName'])) {
             $this->ReturnView("", true);
@@ -22,14 +28,19 @@ class Project extends BaseController {
             $result = $model->Add($userid, $projectName, $projectDescription);
             
             if ($result != false) {
+                $viewbag = "Error";
                 $this->ReturnView("Project added!", true);
             }
             else {
+                $viewbag = "Error";
                 $this->ReturnView("Project was not added due error!", true);                
             }
         }
     }
 
+    /*
+     * Returns delete view or deletes the project data sent to controller
+     */   
     protected function Delete() {
         $userid = $_SESSION['userid'];
         
@@ -57,6 +68,9 @@ class Project extends BaseController {
         }
     }
 
+    /*
+     * Returns View -view
+     */     
     protected function View() {
         $projectId =    $_GET['id'];
         $userid =       $_SESSION['userid'];
@@ -73,6 +87,9 @@ class Project extends BaseController {
         }        
     }
 
+    /*
+     * Returns edit view or updates the project data sent to controller
+     */   
     protected function Edit() {
         $projectId =    $_GET['id'];
         $userid =       $_SESSION['userid'];

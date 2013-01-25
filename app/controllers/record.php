@@ -2,6 +2,9 @@
 
 class Record extends BaseController {
 
+    /*
+     * Return the index view of the Hours controller
+     */     
     protected function Index() {
         $userid = $_SESSION['userid'];
         
@@ -17,6 +20,9 @@ class Record extends BaseController {
         }
     }
 
+    /*
+     * Saves the recorded hours to database
+     */     
     protected function SaveRecordedHours() {
         $minutes = $_POST['minutes'];
         $recordid = $_POST['recordid'];
@@ -34,6 +40,9 @@ class Record extends BaseController {
         }
     }
     
+    /* 
+     * Gets new id for recording from the database
+     */
     protected function getRecordId() {
         $userid = $_SESSION['userid'];
         $projectid = $_POST['projectid'];
@@ -44,6 +53,9 @@ class Record extends BaseController {
         echo $model->getRecordId($userid, $projectid, $description);        
     }
     
+    /* 
+     * Deletes previously recorded hours from the database
+     */
     protected function DeleteRecordedHours() {
         $userid = $_SESSION['userid'];
         $recordid = $_POST['recordid'];    
@@ -53,6 +65,10 @@ class Record extends BaseController {
         $model->DeleteRecordedHours($userid, $recordid);
     }
     
+    /*
+     * Confirm the hours by moving the hours from the recorded hours table to 
+     * the hours table
+     */
     protected function ConfirmRecordedHours() {
         $userid = $_SESSION['userid'];
         $recordid = $_POST['recordid']; 

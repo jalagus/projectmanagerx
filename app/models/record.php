@@ -5,6 +5,9 @@ class RecordModel extends BaseModel {
     private $projectViewmodel;
     private $hoursViewmodel;    
     
+    /*
+     * Contructor of the record model -object
+     */    
     public function __construct() {
         parent::__construct();    
         
@@ -12,6 +15,13 @@ class RecordModel extends BaseModel {
         $this->hoursViewmodel = new HoursViewmodel($this->database);
     }  
     
+    
+    /*
+     * Returns view data used by index view. Return list of projects and 
+     * list of recorded hours
+     * 
+     * @param int $userid id of the user asking the data
+     */    
     public function getRecordData($userid) {        
         $recordViewmodel->projectList = $this->projectViewmodel->getList($userid);        
         $recordViewmodel->recordList = $this->getList($userid);     
@@ -19,6 +29,15 @@ class RecordModel extends BaseModel {
         return $recordViewmodel;
     }
     
+    /*
+     * Returns id for the recording of hours and saves the base date to 
+     * the database
+     * 
+     * @param int $userid id of the user
+     * @param int $projectid id of the project
+     * @param int $description work description
+     * 
+     */
     public function getRecordId($userid, $projectid, $description) {
         $query = $this->database->prepare("INSERT INTO recordedhours (userid, projectid, description, date) VALUES (?, ?, ?, CURDATE() )"); 
         $query->execute(array($userid, $projectid, $description)); 
@@ -31,6 +50,14 @@ class RecordModel extends BaseModel {
         }
     }
     
+    /*
+     * Updates the hours to the database
+     * 
+     * @param int $userid id of the user
+     * @param int $recordid id of the recording
+     * @param int $minutes recorded minutes
+     * 
+     */    
     public function SaveRecordedHours($userid, $recordid, $minutes) {
         $query = $this->database->prepare("UPDATE recordedhours SET minutes = ? WHERE userid = ? AND id = ?");
         $query->execute(array($minutes, $userid, $recordid));
@@ -43,6 +70,13 @@ class RecordModel extends BaseModel {
         }
     }
     
+    /*
+     * Updates the recorded hours to the database
+     * 
+     * @param int $userid id of the user
+     * @param int $recordid id of the recording
+     * 
+     */      
     public function ConfirmRecordedHours($userid, $recordid) {
         $record = $this->getById($userid, $recordid);
         
@@ -59,12 +93,25 @@ class RecordModel extends BaseModel {
         $this->DeleteRecordedHours($userid, $recordid);
     }
     
+    /*
+     * Deletes the recorded hours from the database
+     * 
+     * @param int $userid id of the user
+     * @param int $recordid id of the recording
+     * 
+     */     
     public function DeleteRecordedHours($userid, $recordid) {
         $query = $this->database->prepare("DELETE FROM recordedhours WHERE userid = ? AND id = ?");
         
         return $query->execute(array($userid, $recordid));        
     }    
     
+    /*
+     * Returns the list of recording
+     * 
+     * @param int $userid id of the user
+     * 
+     */ 
     public function getList($userid) {
         $query = $this->database->prepare("SELECT r.id AS id, r.minutes AS minutes, 
             r.date AS date, p.name AS projectname, p.id AS projectid, r.description AS description
@@ -84,13 +131,19 @@ class RecordModel extends BaseModel {
         return $recordedHoursList;
     } 
 
-    public function getById($userid, $id) {
+    /*
+     * Returns one entry of recorded hours by id
+     * 
+     * @param int $userid id of the user
+     * @param int $hoursid id of the hours
+     */     
+    public function getById($userid, $hoursid) {
         $query = $this->database->prepare("SELECT r.id AS id, r.minutes AS minutes, 
             r.date AS date, p.name AS projectname, p.id AS projectid, r.description AS description
             FROM recordedhours AS r, projects AS p 
             WHERE r.projectid = p.id AND r.userid = ? AND r.id = ?");
         
-        $query->execute(array($userid, $id));       
+        $query->execute(array($userid, $hoursid));       
         
         return $query->fetchObject("Record");
     }     

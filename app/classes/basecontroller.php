@@ -11,7 +11,7 @@ abstract class BaseController {
     }
 
     /*
-     * Starts the controller with specified action/page
+     * Starts the controller with specified action/page in constructor
      * 
      */
     public function Invoke() {

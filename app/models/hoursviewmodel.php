@@ -12,10 +12,20 @@ class HoursViewmodel {
     
     private $database;
     
+    /*
+     * Contructor of the hours viewmodel -object
+     * 
+     * @param PDO $database PDO-object of the database
+     */    
     public function __construct($database = null) {
         $this->database = $database;
     }
     
+    /*
+     * Returns list of all hours
+     * 
+     * @param int $userid id of the user
+     */
     public function getList($userid) {
         $query = $this->database->prepare("SELECT 
             p.name AS projectname, p.id AS projectid, h.minutes AS minutes, 
@@ -36,6 +46,12 @@ class HoursViewmodel {
         return $hourslist;        
     }
     
+    /*
+     * Returns one entry of hours by id
+     * 
+     * @param int $userid id of the user
+     * @param int $hoursid id of the hours to be returned 
+     */    
     public function getById($userid, $hoursid) {
         $query = $this->database->prepare("SELECT 
             p.name AS projectname, p.id AS projectid, h.minutes AS minutes, 

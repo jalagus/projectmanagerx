@@ -9,6 +9,11 @@ class HoursDBModel {
     public $date;
     public $description;
 
+    /* 
+     * Constructor of the database model of the hours -object
+     * 
+     * Used for loading and saving data to the database
+     */
     public function __construct($userid, $projectid, $minutes, $date, $description) {
         $this->userid = $userid;
         $this->projectid = $projectid;

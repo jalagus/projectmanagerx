@@ -4,11 +4,10 @@
 define('BASE_DIR', '/');
 define('BASE_NAME', "Project Manager X");
 
-// Database
-
+// Database variables
 define('DB_TYPE','mysql');
 define('DB_PASSWORD','root');
-define('DB_NAME','pAroject_db');
+define('DB_NAME','project_db');
 define('DB_USERNAME','root');
 define('DB_HOSTNAME','localhost');
 

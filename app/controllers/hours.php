@@ -2,6 +2,9 @@
 
 class Hours extends BaseController {
 
+    /*
+     * Return the index view of the Hours controller
+     */    
     protected function Index() {
         $userid = $_SESSION['userid'];
         
@@ -10,6 +13,9 @@ class Hours extends BaseController {
         $this->ReturnView($viewmodel->Index($userid), true);
     }
     
+    /*
+     * Returns add view or saves the data sent to controller
+     */
     protected function Add() {
         $userid = $_SESSION['userid'];
         
@@ -42,6 +48,9 @@ class Hours extends BaseController {
         }
     }
     
+    /*
+     * Return delete view or deleter the data sent to controller
+     */
     protected function Delete() {
         $userid = $_SESSION['userid'];
         
