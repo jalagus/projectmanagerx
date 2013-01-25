@@ -27,12 +27,7 @@ class ProjectModel extends BaseModel {
         return $this->projectViewmodel->getById($userid, $id);      
     }
     
-    public function Delete($userid, $projectid) { 
-        // Delete added hours
-        $query = $this->database->prepare("DELETE FROM hours WHERE projectid = ? AND userid = ?");
-        $query->execute(array($projectid, $userid));
-        
-        // Delete project
+    public function Delete($userid, $projectid) {
         $query = $this->database->prepare("DELETE FROM projects WHERE id = ? AND userid = ?");
         $query->execute(array($projectid, $userid));
 
