@@ -62,8 +62,7 @@ function createUser($username, $password) {
         return false;
     }
     
-    $database = new PDO(DB_TYPE . ":host=" . DB_HOSTNAME . ";dbname=" . DB_NAME, 
-            DB_USERNAME, DB_PASSWORD);
+    $database = new PDO(DB_CONNECTION_STRING, DB_USERNAME, DB_PASSWORD);
 
     $password = $username . $password;
     $password = sha1($password);
@@ -75,8 +74,7 @@ function createUser($username, $password) {
 }
 
 function isUsernameFree($username) {
-    $database = new PDO(DB_TYPE . ":host=" . DB_HOSTNAME . ";dbname=" . DB_NAME, 
-            DB_USERNAME, DB_PASSWORD);
+    $database = new PDO(DB_CONNECTION_STRING, DB_USERNAME, DB_PASSWORD);
 
     $query = $database->prepare("SELECT username FROM users WHERE username = ?");
     $query->execute(array($username));

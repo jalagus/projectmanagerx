@@ -6,7 +6,6 @@
   <meta name="description" content="Project Manager X">
   <meta name="author" content="Jarkko Lagus">
   <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/login.css">
-  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/smoothness/jquery-ui-1.9.2.custom.min.css">
 
 </head>
 <body>
@@ -21,7 +20,7 @@ Username<br/>
 Password<br/>
 <input class="rounded" type="password" name="password" /> <br/>
 
-<input class="button" type="submit" value="Register">
+<input class="button" type="submit" value="Log in">
 </form>
 
 </div>

@@ -36,6 +36,8 @@ class HoursModel extends BaseModel {
     /* 
      * Saves the hours to database
      * 
+     * Return string with rows that had error in saving
+     * 
      * @param int $userid id of the user
      * @param int $projectid id of the project
      * @param int $minutes time used on the task
@@ -46,6 +48,8 @@ class HoursModel extends BaseModel {
         $i = 0;
         
         $errorMsg = "";
+        
+        $savedLines = 0;
         
         while (isset($projectid[$i])) {
             if ($minutes[$i] > 0) {
@@ -59,6 +63,9 @@ class HoursModel extends BaseModel {
                 if ($query == false) {
                     $errorMsg .= "Row: " . $minutes[$i] . " " . $date[$i] . " " . $description[$i] . " not saved!\n";
                 }
+                else {
+                    $savedLines++;
+                }
             }
             else {
                 $errorMsg .= "Row with " . $minutes[$i] . " minutes, dated " . $date[$i] . ": \"" . $description[$i] . "\" not saved! \n";            
@@ -66,7 +73,10 @@ class HoursModel extends BaseModel {
             $i++;
         }
         
-        return $errorMsg;
+        $returnModel->errorMsg = $errorMsg;
+        $returnModel->savedLines = $savedLines;
+        
+        return $returnModel;
     }
     
     /*

@@ -1,7 +1,7 @@
 <h2> Record </h2>
 
 <p class="helptext"> Choose the project you want to record hours. You can record 
-    hours only for one project at the same time. After you have recorded the hours, you have to confirm them to project. </p>
+    hours only for one project at the same time. After you have recorded the hours, you have to confirm them to the project. </p>
 
 <p class="helptext"><b> Notice! </b> You can't change the page while recording. </p>
 

@@ -48,7 +48,7 @@ abstract class BaseController {
      * @param string $action action to be invoked
      */
     protected function Redirect($controller, $action) {
-        header("Location: /" . $controller . "/" . $action . "/");
+        header("Location: " . BASE_DIR . $controller . "/" . $action . "/");
     }
     
     /*
@@ -57,11 +57,11 @@ abstract class BaseController {
      * @param string $viewmodel error message
      */
     protected function ReturnError($viewmodel) {        
-        $viewloc = 'views/error/error.php';
+        $viewloc = BASE_DIR . 'views/error/error.php';
 
-        require('views/upperblock.php');
+        require(BASE_DIR . 'views/upperblock.php');
         require($viewloc);
-        require('views/lowerblock.php');
+        require(BASE_DIR . 'views/lowerblock.php');
     }
 }
 

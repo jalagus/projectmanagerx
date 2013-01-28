@@ -25,7 +25,7 @@ class Authentication extends BaseController {
             $_SESSION['logged'] = true;
         }
         
-        header("Location: /");
+        header("Location: " . BASE_DIR);
     }
     
     /*
@@ -35,7 +35,7 @@ class Authentication extends BaseController {
         $_SESSION['logged'] = false;
         session_destroy();
         
-        header("Location: /");
+        header("Location: " . BASE_DIR);
         
     }
 }

@@ -1,10 +1,14 @@
 <h2> Add hours to project </h2>
 
-<p> More rows can be added with the plus sign at the end of the last row. </p>
+<p class="helptext"> More rows can be added with the plus sign at the end of the last row. </p>
 
 <?php
     if (!empty($viewbag)) {
-        echo "<p><b>Notice:</b><br/>" . nl2br($viewbag) . "</p>";
+        echo "<p> Saved " . $viewbag->savedLines . " entries</p>";
+        
+        if (!empty($viewbag->errorMsg)) {
+            echo "<p><b>Notice:</b><br/>" . nl2br($viewbag->errorMsg) . "</p>";
+        }
     }
 ?>
 
