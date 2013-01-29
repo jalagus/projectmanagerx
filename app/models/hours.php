@@ -53,7 +53,8 @@ class HoursModel extends BaseModel {
         
         while (isset($projectid[$i])) {
             if ($minutes[$i] > 0) {
-                $hoursObj = new HoursDBModel($userid, $projectid[$i], $minutes[$i], $date[$i], $description[$i]);
+                $hoursObj = new HoursDBModel($userid, $projectid[$i], $minutes[$i], 
+                    $date[$i], htmlspecialchars($description[$i]));
                 
                 $query = $this->database->prepare("INSERT INTO hours (id, userid, projectid, minutes, date, description) 
                     VALUES (:id, :userid, :projectid, :minutes, :date, :description)");
@@ -73,7 +74,7 @@ class HoursModel extends BaseModel {
             $i++;
         }
         
-        $returnModel->errorMsg = $errorMsg;
+        $returnModel->errorMsg = htmlspecialchars($errorMsg);
         $returnModel->savedLines = $savedLines;
         
         return $returnModel;
