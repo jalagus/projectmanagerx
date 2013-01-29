@@ -14,7 +14,7 @@ define('DB_HOSTNAME','localhost');
 define('DB_CONNECTION_STRING', DB_TYPE . ":host=" . DB_HOSTNAME . ";dbname=" . DB_NAME);
 
 // Themes
-define('MAIN_STYLE_FILE', '/css/style.css');
-define('JQUERY_UI_THEME_FILE', '/css/smoothness/jquery-ui-1.10.0.custom.min.css');
+define('MAIN_STYLE_FILE', BASE_DIR . 'css/style.css');
+define('JQUERY_UI_THEME_FILE', BASE_DIR . 'css/smoothness/jquery-ui-1.10.0.custom.min.css');
 
 ?>
