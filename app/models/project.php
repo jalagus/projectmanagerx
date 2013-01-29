@@ -34,7 +34,8 @@ class ProjectModel extends BaseModel {
             return false;
         }
         
-        $projectObj = new ProjectDBModel($userid, $projectName, $projectDescription);
+        $projectObj = new ProjectDBModel($userid, htmlspecialchars($projectName), 
+            htmlspecialchars($projectDescription));
         
         $query = $this->database->prepare("INSERT INTO projects (id, userid, name, description) 
             VALUES (:id, :userid, :name, :description)");
@@ -95,7 +96,7 @@ class ProjectModel extends BaseModel {
      */
     public function Update($userid, $projectid, $name, $description) {       
         $query = $this->database->prepare("UPDATE projects SET name = ?, description = ? WHERE id = ? AND userid = ?");
-        $query->execute(array($name, $description, $projectid, $userid));
+        $query->execute(array(htmlspecialchars($name), htmlspecialchars($description), $projectid, $userid));
     }
 }
 
