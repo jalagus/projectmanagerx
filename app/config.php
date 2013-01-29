@@ -4,6 +4,9 @@
 define('BASE_DIR', '/');
 define('BASE_NAME', "Project Manager X");
 
+// Set include path to BASE_DIR
+set_include_path(BASE_DIR);
+
 // Database variables
 define('DB_TYPE','mysql');
 define('DB_PASSWORD','root');
