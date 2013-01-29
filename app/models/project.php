@@ -34,8 +34,7 @@ class ProjectModel extends BaseModel {
             return false;
         }
         
-        $projectObj = new ProjectDBModel($userid, htmlspecialchars($projectName), 
-            htmlspecialchars($projectDescription));
+        $projectObj = new ProjectDBModel($userid, htmlspecialchars($projectName), $projectDescription);
         
         $query = $this->database->prepare("INSERT INTO projects (id, userid, name, description) 
             VALUES (:id, :userid, :name, :description)");

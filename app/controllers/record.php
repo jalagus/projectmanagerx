@@ -50,7 +50,7 @@ class Record extends BaseController {
         
         $model = new RecordModel(); 
         
-        echo $model->getRecordId($userid, $projectid, $description);        
+        echo $model->getRecordId($userid, $projectid, htmlspecialchars($description));        
     }
     
     /* 

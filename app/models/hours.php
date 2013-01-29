@@ -69,7 +69,10 @@ class HoursModel extends BaseModel {
                 }
             }
             else {
-                $errorMsg .= "Row with " . $minutes[$i] . " minutes, dated " . $date[$i] . ": \"" . $description[$i] . "\" not saved! \n";            
+                $projectName = $this->projectViewmodel->getById($userid, $projectid[$i])->name;
+                
+                $errorMsg .= "Couldn't add " . $minutes[$i]  . " minutes to project \"" . $projectName . 
+                        "\" dated " . $date[$i] . " with description \"" . $description[$i] . "\".\n";
             }
             $i++;
         }
