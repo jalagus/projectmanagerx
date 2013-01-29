@@ -27,7 +27,7 @@ abstract class BaseController {
      * @param mixed $viewmodel contains the data to be passed to the view
      */
     protected function ReturnView($viewmodel, $fullview) {
-        $viewloc = 'views/' . get_class($this) . '/' . $this->action . '.php';
+        $viewloc = 'views/' . strtolower(get_class($this)) . '/' . strtolower($this->action) . '.php';
         
         $viewbag = $this->viewbag;
         
