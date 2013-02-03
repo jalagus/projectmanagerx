@@ -1,18 +1,19 @@
-input[type="text"] {
+input[type="text"]  {
     width: 200px;
 }
 
-input[name="hours[]"], input[name="minutes[]"]  {
+input[name="hours[]"], input[name="minutes[]"], 
+input[name="hours"], input[name="minutes"] {
     width: 60px;
 }
-input[name="date[]"]  {
+input[name="date[]"], input[name="date"]  {
     width: 100px;
 }
-input[name="description[]"]  {
+input[name="description[]"], input[name="description"]  {
     width: 500px;
 }
 
-select[name="projectid[]"] {
+select[name="projectid[]"], select[name="projectid"] {
     width: 200px;
 }
 

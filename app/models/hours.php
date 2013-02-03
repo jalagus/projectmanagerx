@@ -107,6 +107,25 @@ class HoursModel extends BaseModel {
     public function ConfirmDelete($userid, $hoursid) {
         return $this->hoursViewmodel->getById($userid, $hoursid);        
     }
+    
+    /*
+     * Gets hours data for edit
+     */
+    public function Edit($userid, $hoursid) {
+        $retValue = $this->hoursViewmodel->getById($userid, $hoursid);
+        $retValue->projectList = $this->projectViewmodel->getList($userid);
+        
+        return $retValue; 
+    }
+    
+    public function Update($userid, $hoursid, $projectid, $minutes, $date, $description) {
+         
+        $query = $this->database->prepare("UPDATE hours SET projectid = ?, minutes = ?, 
+            date = ?, description = ? WHERE id = ? AND userid = ?");
+        $query->execute(array($projectid, $minutes, $date, htmlspecialchars($description), $hoursid, $userid));        
+        
+        return $query;
+    }
 }
 
 ?>
