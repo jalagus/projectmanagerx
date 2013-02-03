@@ -5,11 +5,15 @@ abstract class BaseController {
     protected $urlvalues;
     protected $action;
     
+    protected $utils;
+    
     protected $viewbag;
 
     public function __construct($action, $urlvalues) {
         $this->action = $action;
         $this->urlvalues = $urlvalues;
+        
+        $this->utils = new Utils();
     }
 
     /*
@@ -57,11 +61,11 @@ abstract class BaseController {
      * @param string $viewmodel error message
      */
     protected function ReturnError($viewmodel) {        
-        $viewloc = BASE_DIR . 'views/error/error.php';
+        $viewloc = 'views/error/error.php';
 
-        require(BASE_DIR . 'views/upperblock.php');
+        require('views/upperblock.php');
         require($viewloc);
-        require(BASE_DIR . 'views/lowerblock.php');
+        require('views/lowerblock.php');
     }
 }
 

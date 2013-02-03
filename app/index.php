@@ -8,6 +8,7 @@ require("classes/loader.php");
 require("classes/basecontroller.php");
 require("classes/basemodel.php");
 require("classes/authentication.php");
+require("classes/utils.php");
 
 // Models
 require("models/home.php");

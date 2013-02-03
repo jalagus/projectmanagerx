@@ -6,7 +6,7 @@
     <td>Project</td>
     <td>Description</td>
     <td>Time</td>    
-    <td>Delete</td>
+    <td>Action</td>
 </thead>
 <tbody>
     <?php

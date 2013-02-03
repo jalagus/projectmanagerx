@@ -2,15 +2,21 @@
 
 class Hours extends BaseController {
     
+    private $model;
+    
+    public function __construct($action, $urlvalues) {
+        parent::__construct($action, $urlvalues);
+        
+        $this->model = new HoursModel();
+    }
+    
     /*
      * Return the index view of the Hours controller
      */
     protected function Index() {
         $userid = $_SESSION['userid'];
 
-        $viewmodel = new HoursModel();
-
-        $this->ReturnView($viewmodel->Index($userid), true);
+        $this->ReturnView($this->model->Index($userid), true);
     }
 
     /*
@@ -20,37 +26,19 @@ class Hours extends BaseController {
         $userid = $_SESSION['userid'];
 
         if (!isset($_POST['projectid'])) {
-            $viewmodel = new HoursModel();
-            $this->ReturnView($viewmodel->Add($userid), true);
+            $this->ReturnView($this->model->Add($userid), true);
         } else {
-            $projectid = $_POST['projectid'];
-            $hours = $_POST['hours'];
-            $minutes = $_POST['minutes'];
-            $description = $_POST['description'];
-            $date = $_POST['date'];
+            $hoursObj = $this->utils->arrayToObject($_POST);
 
-            $i = 0;
+            $this->viewbag = $this->model->AddHours($userid, $hoursObj);
 
-            // Transform hours to minutes
-            while (isset($hours[$i])) {
-                $minuteSum[$i] = ($hours[$i] * 60) + $minutes[$i];
-
-                $i++;
-            }
-
-
-            $model = new HoursModel();
-
-            $this->viewbag = $model->AddHours($userid, $projectid, $minuteSum, $date, $description);
-
-            $this->ReturnView($model->Add($userid), true);
+            $this->ReturnView($this->model->Add($userid), true);
         }
     }
 
     /*
      * Return delete view or deletes the data sent to controller
      */
-
     protected function Delete() {
         $userid = $_SESSION['userid'];
 
@@ -64,14 +52,12 @@ class Hours extends BaseController {
         } else {
             $hoursId = $_GET['id'];
 
-            $viewmodel = new HoursModel();
-
-            $viewdata = $viewmodel->ConfirmDelete($userid, $hoursId);
+            $viewdata = $this->model->ConfirmDelete($userid, $hoursId);
 
             if ($viewdata != false) {
                 $this->ReturnView($viewdata, true);
             } else {
-                $this->ReturnError("Cannot find project!");
+                $this->ReturnError("Cannot find hours!");
             }
         }
     }
@@ -79,20 +65,13 @@ class Hours extends BaseController {
     /*
      * Returns edit view
      */
-
     protected function Edit() {
         $userid = $_SESSION['userid'];
 
         if (isset($_POST['hoursid'])) {
-            $hoursid = $_POST['hoursid'];
-            $projectid = $_POST['projectid'];
-            $minutes = ($_POST['hours'] * 60) + $_POST['minutes'];
-            $date = $_POST['date'];
-            $description = $_POST['description'];
-                        
-            $model = new HoursModel();
-
-            $result = $model->Update($userid, $hoursid, $projectid, $minutes, $date, $description);
+            $hoursObj = $this->utils->arrayToObject($_POST);
+                                    
+            $result = $this->model->Update($userid, $hoursObj);
             
             if ($result == false) {
                 $this->viewbag = "Error on saving!";
@@ -101,14 +80,19 @@ class Hours extends BaseController {
                 $this->viewbag = "Data saved!";
             }
             
-            $this->ReturnView($model->Edit($userid, $hoursid), true); 
+            $this->ReturnView($this->model->Edit($userid, $hoursObj->hoursid), true); 
             
         } else {
             $hoursid = $_GET['id'];
 
-            $model = new HoursModel();
-
-            $this->ReturnView($model->Edit($userid, $hoursid), true);
+            $viewdata = $this->model->Edit($userid, $hoursid);
+            
+            if ($viewdata != false) {
+                $this->ReturnView($viewdata, true);
+            }
+            else {
+                $this->ReturnError("Cannot find hours!");
+            }
         }
     }
 

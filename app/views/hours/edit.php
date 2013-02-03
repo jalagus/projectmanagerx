@@ -2,7 +2,7 @@
 
 <?php if ($viewbag != "") echo "<p>" . $viewbag . "</p>"; ?>
 
-<form action="/hours/edit" method="POST">
+<form action="<?php echo BASE_DIR; ?>hours/edit" method="POST">
     
 <table id="hoursForm">
     <thead>
