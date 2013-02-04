@@ -58,10 +58,7 @@ class HoursModel extends BaseModel {
                 $hoursDbObj = new HoursDBModel($userid, $hoursObj->projectid[$i], $minutes, 
                     $hoursObj->date[$i], htmlspecialchars($hoursObj->description[$i]));
                 
-                $query = $this->database->prepare("INSERT INTO hours (id, userid, projectid, minutes, date, description) 
-                    VALUES (:id, :userid, :projectid, :minutes, :date, :description)");
-                
-                $query->execute((array) $hoursDbObj);
+                $query = SaveHoursData($hoursDbObj);
                 
                 if ($query == false) {
                     $errorMsg .= "Row: " . $minutes . " " . $hoursObj->date[$i] . " " . 
@@ -85,6 +82,15 @@ class HoursModel extends BaseModel {
         $returnModel->savedLines = $savedLines;
         
         return $returnModel;
+    }
+    
+    private function SaveHoursData(HoursDBModel $hoursObj) {
+        $query = $this->database->prepare("INSERT INTO hours (id, userid, projectid, minutes, date, description) 
+            VALUES (:id, :userid, :projectid, :minutes, :date, :description)");
+
+        $query->execute((array) $hoursObj);   
+        
+        return $query;
     }
     
     /*
@@ -132,7 +138,6 @@ class HoursModel extends BaseModel {
         
         $query = $this->database->prepare("UPDATE hours SET projectid = ?, minutes = ?, 
             date = ?, description = ? WHERE id = ? AND userid = ?");
-        
         
         $query->execute(array($hoursObj->projectid, $minutes, $hoursObj->date, 
             htmlspecialchars($hoursObj->description), 

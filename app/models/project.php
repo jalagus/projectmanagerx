@@ -29,13 +29,11 @@ class ProjectModel extends BaseModel {
      * @param string $projectName name of the project
      * @param string $projectDescription description of the project
      */    
-    public function Add($userid, $projectName, $projectDescription) {
-        if (empty($userid) || empty($projectName) || empty($projectDescription)) {
+    public function Add(ProjectDBModel $projectObj) {
+        if (empty($projectObj->userid) || empty($projectObj->name) || empty($projectObj->description)) {
             return false;
         }
-        
-        $projectObj = new ProjectDBModel($userid, htmlspecialchars($projectName), $projectDescription);
-        
+                
         $query = $this->database->prepare("INSERT INTO projects (id, userid, name, description) 
             VALUES (:id, :userid, :name, :description)");
         
@@ -93,9 +91,10 @@ class ProjectModel extends BaseModel {
      * @param string $description updated description of the project
      * 
      */
-    public function Update($userid, $projectid, $name, $description) {       
+    public function Update(ProjectDBModel $projectObj) {       
         $query = $this->database->prepare("UPDATE projects SET name = ?, description = ? WHERE id = ? AND userid = ?");
-        $query->execute(array(htmlspecialchars($name), htmlspecialchars($description), $projectid, $userid));
+        $query->execute(array(htmlspecialchars($projectObj->name), $projectObj->description, 
+            $projectObj->id, $projectObj->userid));
     }
 }
 

@@ -46,19 +46,17 @@ class Project extends BaseController {
      */
     
     protected function AddPost() {
-        $projectName = $_POST['projectName'];
-        $projectDescription = $_POST['projectDescription'];
+        $projectObj = new ProjectDBModel($this->userid, $_POST['projectName'], 
+                $_POST['projectDescription']);
 
-        $result = $this->model->Add($this->userid, $projectName, $projectDescription);
+        $result = $this->model->Add($projectObj);
 
         if ($result != false) {
             $this->viewbag = "Project added!";
             $this->ReturnView("", true);
         } else {
-            $projectData = new ProjectDBModel($this->userid, $projectName, $projectDescription);
-
             $this->viewbag = "Project was not added due error!";
-            $this->ReturnView($projectData, true);
+            $this->ReturnView($projectObj, true);
         }
     }
 
@@ -67,7 +65,6 @@ class Project extends BaseController {
      */
 
     protected function Delete() {
-
         $projectId = $_GET['id'];
 
         $viewdata = $this->model->ConfirmDelete($this->userid, $projectId);
@@ -85,7 +82,6 @@ class Project extends BaseController {
      */
 
     protected function DeletePost() {
-
         $projectId = $_POST['projectid'];
 
         $this->model->Delete($this->userid, $projectId);
@@ -130,17 +126,19 @@ class Project extends BaseController {
     /*
      * Updates project data
      */
-
+    
     protected function EditPost() {
-        $projectId = $_POST['projectId'];
-        $name = $_POST['projectName'];
-        $description = $_POST['projectDescription'];
+        $projectObj = new ProjectDBModel($this->userid, $_POST['projectName'], 
+                $_POST['projectDescription']);
+        
+        $projectObj->id = $_POST['projectId'];
+        
+        $this->model->Update($projectObj);
 
-        $this->model->Update($this->userid, $projectId, $name, $description);
-
-        $viewdata = $this->model->Edit($this->userid, $projectId);
-
+        $viewdata = $this->model->Edit($this->userid, $projectObj->id);
+        
         if ($viewdata != false) {
+            $this->viewbag = "Data saved!";
             $this->ReturnView($viewdata, true);
         } else {
             $error = new Error("Index", "");
