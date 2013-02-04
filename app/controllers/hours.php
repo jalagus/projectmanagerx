@@ -1,99 +1,121 @@
 <?php
 
 class Hours extends BaseController {
-    
+
     private $model;
-    
+    private $userid;
+
     public function __construct($action, $urlvalues) {
         parent::__construct($action, $urlvalues);
-        
+
         $this->model = new HoursModel();
+        $this->userid = $_SESSION['userid'];
     }
     
+    /* 
+     * Overrides the base function and redirects calls with POST variables to 
+     * functions with Post-suffixes
+     */
+    public function Invoke() {        
+        if ($_POST) {
+            return $this->{$this->action . "Post"}();
+        }
+        else {
+            return $this->{$this->action}();
+        }
+    }  
+
     /*
      * Return the index view of the Hours controller
      */
-    protected function Index() {
-        $userid = $_SESSION['userid'];
 
-        $this->ReturnView($this->model->Index($userid), true);
+    protected function Index() {
+        $this->ReturnView($this->model->Index($this->userid), true);
     }
 
     /*
-     * Returns add view or saves the data sent to controller
+     * Returns add view
      */
+
     protected function Add() {
-        $userid = $_SESSION['userid'];
+        $this->ReturnView($this->model->Add($this->userid), true);
+    }
 
-        if (!isset($_POST['projectid'])) {
-            $this->ReturnView($this->model->Add($userid), true);
-        } else {
-            $hoursObj = $this->utils->arrayToObject($_POST);
+    /*
+     * Saves hours to database
+     */
 
-            $this->viewbag = $this->model->AddHours($userid, $hoursObj);
+    protected function AddPost() {
+        $hoursObj = $this->utils->arrayToObject($_POST);
 
-            $this->ReturnView($this->model->Add($userid), true);
-        }
+        $this->viewbag = $this->model->AddHours($this->userid, $hoursObj);
+
+        $this->ReturnView($this->model->Add($this->userid), true);
     }
 
     /*
      * Return delete view or deletes the data sent to controller
      */
+
     protected function Delete() {
-        $userid = $_SESSION['userid'];
+        $hoursId = $_GET['id'];
 
-        if (isset($_POST['hoursid'])) {
-            $hoursId = $_POST['hoursid'];
+        $viewdata = $this->model->ConfirmDelete($this->userid, $hoursId);
 
-            $model = new HoursModel();
-            $model->Delete($userid, $hoursId);
-
-            $this->Redirect("hours", "index");
+        if ($viewdata != false) {
+            $this->ReturnView($viewdata, true);
         } else {
-            $hoursId = $_GET['id'];
-
-            $viewdata = $this->model->ConfirmDelete($userid, $hoursId);
-
-            if ($viewdata != false) {
-                $this->ReturnView($viewdata, true);
-            } else {
-                $this->ReturnError("Cannot find hours!");
-            }
+            $error = new Error("Index", "");
+            $error->ReturnView("Cannot find hours!", true);
         }
+    }
+
+    /*
+     * Deletes the hours entry
+     */
+
+    protected function DeletePost() {
+        $hoursId = $_POST['hoursid'];
+
+        $model = new HoursModel();
+        $model->Delete($this->userid, $hoursId);
+
+        $this->Redirect("hours", "index");
     }
 
     /*
      * Returns edit view
      */
+
     protected function Edit() {
-        $userid = $_SESSION['userid'];
+        $hoursid = $_GET['id'];
 
-        if (isset($_POST['hoursid'])) {
-            $hoursObj = $this->utils->arrayToObject($_POST);
-                                    
-            $result = $this->model->Update($userid, $hoursObj);
-            
-            if ($result == false) {
-                $this->viewbag = "Error on saving!";
-            }
-            else {
-                $this->viewbag = "Data saved!";
-            }
-            
-            $this->ReturnView($this->model->Edit($userid, $hoursObj->hoursid), true); 
-            
+        $viewdata = $this->model->Edit($this->userid, $hoursid);
+
+        if ($viewdata != false) {
+            $this->ReturnView($viewdata, true);
         } else {
-            $hoursid = $_GET['id'];
-
-            $viewdata = $this->model->Edit($userid, $hoursid);
-            
-            if ($viewdata != false) {
-                $this->ReturnView($viewdata, true);
-            }
-            else {
-                $this->ReturnError("Cannot find hours!");
-            }
+            $error = new Error("Index", "");
+            $error->ReturnView("Cannot find hours!", true);
         }
+    }
+
+    /*
+     * Updates the edited hours
+     */
+
+    protected function EditPost() {
+        $hoursObj = $this->utils->arrayToObject($_POST);
+
+        $result = $this->model->Update($this->userid, $hoursObj);
+
+        if ($result == false) {
+            $this->viewbag = "Error on saving!";
+        } else {
+            $this->viewbag = "Data saved!";
+        }
+
+        $this->ReturnView($this->model->Edit($this->userid, $hoursObj->hoursid), true);
     }
 
 }

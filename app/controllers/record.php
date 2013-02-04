@@ -1,83 +1,89 @@
 <?php
 
 class Record extends BaseController {
+    
+    private $model;
 
+    public function __construct($action, $urlvalues) {
+        parent::__construct($action, $urlvalues);
+        
+        $this->model = new RecordModel();
+    }
+    
     /*
      * Return the index view of the Hours controller
-     */     
+     */
+
     protected function Index() {
         $userid = $_SESSION['userid'];
-        
-        $model = new RecordModel();
-        
-        $viewdata = $model->getRecordData($userid);
-        
+
+        $viewdata = $this->model->getRecordData($userid);
+
         if ($viewdata != false) {
             $this->ReturnView($viewdata, true);
-        }
-        else {
-            $this->ReturnError("Could not load records!");
+        } else {
+            $error = new Error("Index", "");
+            $error->ReturnView("Could not load recorded hours!", true);
         }
     }
 
     /*
      * Saves the recorded hours to database
-     */     
+     */
+
     protected function SaveRecordedHours() {
         $minutes = $_POST['minutes'];
         $recordid = $_POST['recordid'];
         $userid = $_SESSION['userid'];
-        
-        $model = new RecordModel(); 
-        
-        $viewdata = $model->SaveRecordedHours($userid, $recordid, $minutes);
-        
+
+        $viewdata = $this->model->SaveRecordedHours($userid, $recordid, $minutes);
+
         if ($viewdata != false) {
             echo $viewdata;
-        }
-        else  {
+        } else {
             echo "Error saving data..";
         }
     }
-    
-    /* 
+
+    /*
      * Gets new id for recording from the database
      */
+
     protected function getRecordId() {
         $userid = $_SESSION['userid'];
         $projectid = $_POST['projectid'];
         $description = $_POST['description'];
-        
-        $model = new RecordModel(); 
-        
-        echo $model->getRecordId($userid, $projectid, htmlspecialchars($description));        
+
+        echo $this->model->getRecordId($userid, $projectid, htmlspecialchars($description));
     }
-    
-    /* 
+
+    /*
      * Deletes previously recorded hours from the database
+     * 
+     * Accessed via ajax so doesn't return any view
      */
+
     protected function DeleteRecordedHours() {
         $userid = $_SESSION['userid'];
-        $recordid = $_POST['recordid'];    
-        
-        $model = new RecordModel();
-        
-        $model->DeleteRecordedHours($userid, $recordid);
+        $recordid = $_POST['recordid'];
+
+        $this->model->DeleteRecordedHours($userid, $recordid);
     }
-    
+
     /*
      * Confirm the hours by moving the hours from the recorded hours table to 
      * the hours table
+     * 
+     * Accessed via ajax so doesn't return any view
      */
+
     protected function ConfirmRecordedHours() {
         $userid = $_SESSION['userid'];
-        $recordid = $_POST['recordid']; 
-        
-        $model = new RecordModel();
+        $recordid = $_POST['recordid'];
 
-        $model->ConfirmRecordedHours($userid, $recordid);
-    }    
-    
+        $this->model->ConfirmRecordedHours($userid, $recordid);
+    }
+
 }
 
 ?>

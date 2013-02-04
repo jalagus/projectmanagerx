@@ -10,7 +10,12 @@ abstract class BaseModel {
      * Use config.php to change the connection parameters
      */
     public function __construct() {
-        $this->database = new PDO(DB_CONNECTION_STRING, DB_USERNAME, DB_PASSWORD);
+        try {
+            $this->database = new PDO(DB_CONNECTION_STRING, DB_USERNAME, DB_PASSWORD);
+        }
+        catch (PDOException $ex) {
+            die("<b>Error in database connection:</b> " . $ex->getMessage());
+        }
     }
 
 }

@@ -2,6 +2,9 @@
 
 class Utils {
 
+    /* 
+     * Transforms array to object
+     */
     public function arrayToObject($array) {
         $object = new stdClass();
 

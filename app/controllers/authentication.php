@@ -3,12 +3,11 @@
 class Authentication extends BaseController {
 
     /*
-     * Shows index-page of the controller
+     * Shows the login view
      * 
-     * Contains the login form
      */
-    protected function Index() {
-        $this->ReturnView("", false);
+    protected function Index() {        
+        $this->ReturnView("", false);            
     }
     
     /*
@@ -21,12 +20,19 @@ class Authentication extends BaseController {
         $password = $_POST['password'];
         
         $model = new AuthenticationModel();
+        
         if ($model->checkLogin($username, $password)) {
             $_SESSION['logged'] = true;
+            
+            $this->Redirect("home", "index");
+        }
+        else {
+            $error = new Error("LoginError", "");
+            $error->ReturnView("", false);
         }
         
-        header("Location: " . BASE_DIR);
     }
+    
     
     /*
      * Deletes the session and logs the user out
@@ -35,8 +41,7 @@ class Authentication extends BaseController {
         $_SESSION['logged'] = false;
         session_destroy();
         
-        header("Location: " . BASE_DIR);
-        
+        header("Location: " . BASE_DIR);    
     }
 }
 

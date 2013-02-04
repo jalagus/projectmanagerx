@@ -12,7 +12,7 @@
 
 <div id="container">
 <h2><?php echo BASE_NAME; ?></h2>
-<form action="<?php echo BASE_DIR; ?>authenctication/login" method="POST">
+<form action="<?php echo BASE_DIR; ?>authentication/login" method="POST">
 
 Username<br/>
 <input class="rounded" type="text" name="username" /> <br/>
@@ -24,5 +24,6 @@ Password<br/>
 </form>
 
 </div>
+
 </body>
 </html>

@@ -2,119 +2,152 @@
 
 class Project extends BaseController {
 
-    /*
-     * Return the index view of the Hours controller
-     */      
-    protected function Index() {
-        $viewmodel = new ProjectModel();
-        $userid = $_SESSION['userid'];
-        
-        $this->ReturnView($viewmodel->Index($userid), true);
+    private $model;
+    private $userid;
+
+    public function __construct($action, $urlvalues) {
+        parent::__construct($action, $urlvalues);
+
+        $this->model = new ProjectModel();
+        $this->userid = $_SESSION['userid'];
     }
-
-    /*
-     * Returns add view or saves the project data sent to controller
-     */   
-    protected function Add() {
-        if (!isset($_POST['projectName'])) {
-            $this->ReturnView("", true);
-        } else {
-            $projectName = $_POST['projectName'];
-            $projectDescription = $_POST['projectDescription'];
-            $userid = $_SESSION['userid'];
-
-            $model = new ProjectModel();
-
-            $result = $model->Add($userid, $projectName, $projectDescription);
-            
-            if ($result != false) {
-                $this->viewbag = "Project added!";
-                $this->ReturnView("", true);
-            }
-            else {
-                $projectData = new ProjectDBModel($userid, $projectName, $projectDescription);
-                
-                $this->viewbag = "Project was not added due error!";
-                $this->ReturnView($projectData, true);                
-            }
-        }
-    }
-
-    /*
-     * Returns delete view or deletes the project data sent to controller
-     */   
-    protected function Delete() {
-        $userid = $_SESSION['userid'];
-        
-        if (isset($_POST['projectid'])) {
-            $projectId = $_POST['projectid'];
-
-            $model = new ProjectModel();
-            $model->Delete($userid, $projectId);
-
-            $this->Redirect("project", "index");
+    
+    /* 
+     * Overrides base function and redirects calls with POST variables to 
+     * functions with Post-suffixes
+     */
+    public function Invoke() {        
+        if ($_POST) {
+            return $this->{$this->action . "Post"}();
         }
         else {
-            $projectId = $_GET['id'];
-            
-            $viewmodel = new ProjectModel();
-            
-            $viewdata = $viewmodel->ConfirmDelete($userid, $projectId);
-            
-            if ($viewdata != false) {
-                $this->ReturnView($viewdata, true);
-            }
-            else {
-                $this->ReturnError("Could not find selected project");
-            }
+            return $this->{$this->action}();
         }
+    }    
+
+    /*
+     * Return the index view of the Hours controller
+     */
+
+    protected function Index() {
+        $this->ReturnView($this->model->Index($this->userid), true);
+    }
+
+    /*
+     * Returns add view
+     */
+
+    protected function Add() {
+        $this->ReturnView("", true);
+    }
+
+    /*
+     * Adds project to database
+     */
+    
+    protected function AddPost() {
+        $projectName = $_POST['projectName'];
+        $projectDescription = $_POST['projectDescription'];
+
+        $result = $this->model->Add($this->userid, $projectName, $projectDescription);
+
+        if ($result != false) {
+            $this->viewbag = "Project added!";
+            $this->ReturnView("", true);
+        } else {
+            $projectData = new ProjectDBModel($this->userid, $projectName, $projectDescription);
+
+            $this->viewbag = "Project was not added due error!";
+            $this->ReturnView($projectData, true);
+        }
+    }
+
+    /*
+     * Returns delete view
+     */
+
+    protected function Delete() {
+
+        $projectId = $_GET['id'];
+
+        $viewdata = $this->model->ConfirmDelete($this->userid, $projectId);
+
+        if ($viewdata != false) {
+            $this->ReturnView($viewdata, true);
+        } else {
+            $error = new Error("Index", "");
+            $error->ReturnView("Cannot find project!", true);
+        }
+    }
+
+    /*
+     * Deletes project
+     */
+
+    protected function DeletePost() {
+
+        $projectId = $_POST['projectid'];
+
+        $this->model->Delete($this->userid, $projectId);
+
+        $this->Redirect("project", "index");
     }
 
     /*
      * Returns View -view
-     */     
-    protected function View() {
-        $projectId =    $_GET['id'];
-        $userid =       $_SESSION['userid'];
+     */
 
-        $viewmodel = new ProjectModel();
-        
-        $viewdata = $viewmodel->View($userid, $projectId);
-        
+    protected function View() {
+        $projectId = $_GET['id'];
+
+        $viewdata = $this->model->View($this->userid, $projectId);
+
         if ($viewdata != false) {
             $this->ReturnView($viewdata, true);
+        } else {
+            $error = new Error("Index", "");
+            $error->ReturnView("Cannot find project!", true);
         }
-        else {
-            $this->ReturnError("Cannot find project!");
-        }        
     }
 
     /*
-     * Returns edit view or updates the project data sent to controller
-     */   
+     * Returns edit view
+     */
+
     protected function Edit() {
-        $projectId =    $_GET['id'];
-        $userid =       $_SESSION['userid'];
+        $projectId = $_GET['id'];
 
-        if (isset($_POST['projectId'])) {
-            $projectId =    $_POST['projectId'];
-            $name =         $_POST['projectName'];
-            $description =  $_POST['projectDescription'];
+        $viewdata = $this->model->Edit($this->userid, $projectId);
 
-            $model = new ProjectModel();
-            $model->Update($userid, $projectId, $name, $description);
-        }
-
-        $viewmodel = new ProjectModel();
-        $viewdata = $viewmodel->Edit($userid, $projectId);
-        
         if ($viewdata != false) {
             $this->ReturnView($viewdata, true);
-        }
-        else {
-            $this->ReturnError("Cannot find project!");
+        } else {
+            $error = new Error("Index", "");
+            $error->ReturnView("Cannot find project!", true);
         }
     }
+
+    /*
+     * Updates project data
+     */
+
+    protected function EditPost() {
+        $projectId = $_POST['projectId'];
+        $name = $_POST['projectName'];
+        $description = $_POST['projectDescription'];
+
+        $this->model->Update($this->userid, $projectId, $name, $description);
+
+        $viewdata = $this->model->Edit($this->userid, $projectId);
+
+        if ($viewdata != false) {
+            $this->ReturnView($viewdata, true);
+        } else {
+            $error = new Error("Index", "");
+            $error->ReturnView("Cannot find project!", true);
+        }
+    }
+
 }
 
 ?>

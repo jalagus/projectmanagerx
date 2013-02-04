@@ -20,18 +20,22 @@ abstract class BaseController {
      * Starts the controller with specified action/page in constructor
      * 
      */
-    public function Invoke() {
+    public function Invoke() {        
         return $this->{$this->action}();
     }
 
     /*
      * Returns the view to be shown
      * 
+     * Automatically removes Post-suffix if present
+     * 
      * @param bool $fullview if true returns the whole page, if false returns a partial view
      * @param mixed $viewmodel contains the data to be passed to the view
      */
     protected function ReturnView($viewmodel, $fullview) {
-        $viewloc = 'views/' . strtolower(get_class($this)) . '/' . strtolower($this->action) . '.php';
+        $parsedAction = $this->removePostFromAction($this->action);
+        
+        $viewloc = 'views/' . strtolower(get_class($this)) . '/' . strtolower($parsedAction) . '.php';
         
         $viewbag = $this->viewbag;
         
@@ -44,6 +48,14 @@ abstract class BaseController {
         }
     }
     
+    protected function removePostFromAction($action) {
+        if (strstr($action, "Post")) {
+            $action = substr($action, 0, strlen($action) - 4);
+        }
+        
+        return $action;
+    }
+    
     /*
      * Redirects to specific controller and action
      * 
@@ -53,19 +65,6 @@ abstract class BaseController {
      */
     protected function Redirect($controller, $action) {
         header("Location: " . BASE_DIR . $controller . "/" . $action . "/");
-    }
-    
-    /*
-     * Returns error page with custom message
-     * 
-     * @param string $viewmodel error message
-     */
-    protected function ReturnError($viewmodel) {        
-        $viewloc = 'views/error/error.php';
-
-        require('views/upperblock.php');
-        require($viewloc);
-        require('views/lowerblock.php');
     }
 }
 

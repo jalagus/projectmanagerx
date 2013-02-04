@@ -54,6 +54,11 @@ class ProjectViewmodel {
         $query->execute(array($userid, $projectid)); 
         
         $project = $query->fetchObject("ProjectViewmodel");
+        
+        if ($project == false) {
+            return false;
+        }
+        
         $project->minutes = $this->getMinutesById($project->id);
         
         return $project;        
