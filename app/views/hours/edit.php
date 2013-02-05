@@ -1,6 +1,10 @@
 <h2> Edit hours </h2>
 
-<?php if ($viewbag != "") echo "<p>" . $viewbag . "</p>"; ?>
+<?php 
+if ($viewbag != "") { 
+    echo '<p id="status">' . $viewbag . "</p>";
+}
+?>
 
 <form action="<?php echo BASE_DIR; ?>hours/edit" method="POST">
     

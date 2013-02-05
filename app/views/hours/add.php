@@ -12,7 +12,7 @@
     }
 ?>
 
-<form action="<?php echo BASE_DIR; ?>hours/add" method="POST">
+<form id="addHoursForm" action="<?php echo BASE_DIR; ?>hours/add" method="POST">
 
     <table id="hoursForm">
         <thead>
@@ -75,7 +75,7 @@
             '<td><input type="text" name="minutes[]" /></td>' +
             '<td><input class="dateInput" type="text" name="date[]" /></td>' +
             '<td><input type="text" name="description[]" /></td></tr>');
-        
+                      
         $(".dateInput").datepicker({ dateFormat: 'yy-mm-dd' });
     });
 </script>

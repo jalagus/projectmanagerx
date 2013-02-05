@@ -24,6 +24,7 @@ require("models/projectviewmodel.php");
 require("models/hoursviewmodel.php");
 require("models/reportviewmodel.php");
 require("models/recordviewmodel.php");
+require("models/homeviewmodel.php");
 
 // DBModels for saving data
 require("models/database/hoursdbmodel.php");
