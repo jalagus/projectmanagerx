@@ -17,7 +17,6 @@
         <script src="<?php echo BASE_DIR; ?>js/tiny_mce/tiny_mce.js"></script>        
         <script src="<?php echo BASE_DIR; ?>js/jquery.dataTables.min.js"></script>
         <script src="<?php echo BASE_DIR; ?>js/jquery-ui-1.10.0.custom.min.js"></script>
-        <script src="<?php echo BASE_DIR; ?>js/jquery.validate.min.js"></script>
         <script>
             $(function() {
                 $(".dateInput").datepicker({ dateFormat: 'yy-mm-dd' }); 

@@ -58,7 +58,7 @@ class HoursModel extends BaseModel {
                 $hoursDbObj = new HoursDBModel($userid, $hoursObj->projectid[$i], $minutes, 
                     $hoursObj->date[$i], htmlspecialchars($hoursObj->description[$i]));
                 
-                $query = SaveHoursData($hoursDbObj);
+                $query = $this->SaveHoursData($hoursDbObj);
                 
                 if ($query == false) {
                     $errorMsg .= "Row: " . $minutes . " " . $hoursObj->date[$i] . " " . 
@@ -120,6 +120,9 @@ class HoursModel extends BaseModel {
     
     /*
      * Gets hours data for edit
+     * 
+     * @param int $userid id of the user
+     * @param int $hoursid id of the hours to be edited 
      */
     public function Edit($userid, $hoursid) {
         $retValue = $this->hoursViewmodel->getById($userid, $hoursid);
@@ -133,8 +136,19 @@ class HoursModel extends BaseModel {
         return $retValue; 
     }
     
+    
+    /*
+     * Gets hours data for edit
+     * 
+     * @param int $userid id of the user
+     * @param HoursModel $hoursObj object that contains the hours data
+     */    
     public function Update($userid, $hoursObj) {               
         $minutes = $hoursObj->hours * 60 + $hoursObj->minutes;
+        
+        if ($minutes < 1) {
+            return false;
+        }
         
         $query = $this->database->prepare("UPDATE hours SET projectid = ?, minutes = ?, 
             date = ?, description = ? WHERE id = ? AND userid = ?");

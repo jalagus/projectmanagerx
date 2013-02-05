@@ -14,7 +14,7 @@
 
 <form id="addHoursForm" action="<?php echo BASE_DIR; ?>hours/add" method="POST">
 
-    <table id="hoursForm">
+    <table id="hoursForm" style="position: relative;">
         <thead>
         <td>Project</td>
         <td>Hours</td>
@@ -58,7 +58,7 @@
         <td><button class="ui-icon ui-icon-plus" id="addRow"> New </button></td>
         </tr>        
     </table>
-    <input type="submit" value="Save rows" />
+    <input id="submit" type="submit" value="Save rows" />
 </form>
 
 <script>
@@ -77,5 +77,37 @@
             '<td><input type="text" name="description[]" /></td></tr>');
                       
         $(".dateInput").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+    
+    
+    // Form validation
+    $("#addHoursForm").submit(function (event) {
+        var validationError = false;
+        
+        // Validate minutes
+        $('input[name="minutes[]"]').each(function () {
+            if ( $(this).val() < 1 && $(this).is(":disabled") == false) {
+                
+                $(this).parent().append('<div style="position: absolute; margin-top: -20px; margin-left: 70px; background:#aaaaaa;">' +
+                    'Input time!<span class="arrow-left"></span></div>').children("div").delay(2000).hide(1000);
+ 
+                validationError = true;
+            }
+        });
+        
+        // Validate date
+        $('input[name="date[]"]').each(function () {
+            if ( $(this).val() == "" && $(this).is(":disabled") == false ) {
+                $(this).parent().append('<div style="position: absolute; margin-top: -20px; margin-left: 110px; background:#aaaaaa;">' +
+                    '<span style="position: relative">Input date!<span class="arrow-left"></span></span></div>').children("div").delay(2000).hide(1000);
+                
+                validationError = true;
+            }
+        });    
+        
+        if (validationError) {
+            event.preventDefault();
+        }
+        
     });
 </script>
