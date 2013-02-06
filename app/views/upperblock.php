@@ -1,3 +1,18 @@
+<?php
+    $controller = $_GET['controller'];
+    
+    $loadStyle = false;
+    $loadScript = false;
+    
+    if (file_exists(BASE_DIR . "css/views/" . $controller . "/style.css")) {
+        $loadStyle = true;
+    }
+    
+    if (file_exists(BASE_DIR . "js/views/" . $controller . "/scripts.js")) {
+        $loadScript = true;
+    }
+    
+?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -6,17 +21,22 @@
         <meta name="description" content="Project Manager X">
         <meta name="author" content="Jarkko Lagus">
         
-        <link rel="stylesheet" href="<?php echo MAIN_STYLE_FILE; ?>">
-        <link rel="stylesheet" href="<?php echo JQUERY_UI_THEME_FILE; ?>">
-        <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/viewstyles.css">
+        <?php if ($loadStyle) { ?>
+            <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/views/<?php echo $controller; ?>/style.css" >
+        <?php } ?>
+        <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/themes/smoothness/jquery-ui-1.10.0.custom.min.css">
+        <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/themes/jquery.dataTables.css">
+        <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/themes/jquery.dataTables_themeroller.css">
+        <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/style.css">
         
-        <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/jquery.dataTables.css">
-        <link rel="stylesheet" href="<?php echo BASE_DIR; ?>css/jquery.dataTables_themeroller.css">
-        
-        <script src="<?php echo BASE_DIR; ?>js/jquery-1.9.0.min.js"></script>
-        <script src="<?php echo BASE_DIR; ?>js/tiny_mce/tiny_mce.js"></script>        
-        <script src="<?php echo BASE_DIR; ?>js/jquery.dataTables.min.js"></script>
-        <script src="<?php echo BASE_DIR; ?>js/jquery-ui-1.10.0.custom.min.js"></script>
+        <script src="<?php echo BASE_DIR; ?>js/libs/jquery-1.9.0.min.js"></script>
+        <script src="<?php echo BASE_DIR; ?>js/libs/tiny_mce/tiny_mce.js"></script>        
+        <script src="<?php echo BASE_DIR; ?>js/libs/jquery.dataTables.min.js"></script>
+        <script src="<?php echo BASE_DIR; ?>js/libs/jquery-ui-1.10.0.custom.min.js"></script>
+        <?php if ($loadScript) { ?>
+            <script src="<?php echo BASE_DIR; ?>js/views/<?php echo $controller; ?>/scripts.js"></script>        
+        <?php } ?>
+            
         <script>
             $(function() {
                 $(".dateInput").datepicker({ dateFormat: 'yy-mm-dd' }); 

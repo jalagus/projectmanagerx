@@ -1,37 +1,3 @@
-input[type="text"]  {
-    width: 200px;
-}
-
-input[name="hours[]"], input[name="minutes[]"], 
-input[name="hours"], input[name="minutes"] {
-    width: 60px;
-}
-input[name="date[]"], input[name="date"]  {
-    width: 100px;
-}
-input[name="description[]"], input[name="description"]  {
-    width: 500px;
-}
-
-select[name="projectid[]"], select[name="projectid"] {
-    width: 200px;
-}
-
-#addRow {
-    position: relative;
-    height: 18px;
-    width: 18px;
-    left: -22px;
-}
-
-#hoursForm {
-    width: 100%;
-}
-
-input[name="description[]"].disabledRow  {
-    width: 477px;
-}
-
 button.recording {
     background: #ffdfe5; /* Old browsers */
     background: -moz-linear-gradient(top,  #ffdfe5 0%, #faa8b6 50%, #fc92a4 51%, #febcc7 100%); /* FF3.6+ */

@@ -37,7 +37,7 @@
         <td><input type="text" name="hours[]" /></td>
         <td><input type="text" name="minutes[]" /></td>
         <td><input class="dateInput" type="text" name="date[]" /></td>
-        <td><input type="text" name="description[]" /></td>
+        <td colspan="2"><input type="text" name="description[]" /></td>
         </tr>
         
         <tr>
@@ -62,52 +62,28 @@
 </form>
 
 <script>
-    $('#addRow').click(function (event) {
-        event.preventDefault();
-        $("#hoursForm tr").last().before('<tr><td><select name="projectid[]">' +
-                <?php
-                foreach ($viewmodel as $row) {
-                    echo '\'<option value="' . $row->id . '">' . $row->name . '</option>\' + ' . "\n";
-                }
-                ?>
-            "</select></td>" +
-            '<td><input type="text" name="hours[]" /></td>' +
-            '<td><input type="text" name="minutes[]" /></td>' +
-            '<td><input class="dateInput" type="text" name="date[]" /></td>' +
-            '<td><input type="text" name="description[]" /></td></tr>');
+$('#addRow').click(function (event) {
+    event.preventDefault();
+    $("#hoursForm tr").last().before('<tr><td><select name="projectid[]">' +
+        <?php
+    foreach ($viewmodel as $row) {
+        echo '\'<option value="' . $row->id . '">' . $row->name . '</option>\' + ' . "\n";
+    }
+        ?>
+        "</select></td>" +
+        '<td><input type="text" name="hours[]" /></td>' +
+        '<td><input type="text" name="minutes[]" /></td>' +
+        '<td><input class="dateInput" type="text" name="date[]" /></td>' +
+        '<td><input type="text" name="description[]" /></td>' +
+        '<td><button class="removeRowButton ui-icon ui-icon-minus"> Remove </button></td></tr>');
                       
-        $(".dateInput").datepicker({ dateFormat: 'yy-mm-dd' });
-    });
+    $(".dateInput").datepicker({ dateFormat: 'yy-mm-dd' });
+        
+    $(".removeRowButton").click(function (event) {
+        event.preventDefault();
+            
+        $(this).parent().parent().remove();
+    }).button().css({height: "19px", width: "18px"});
+});
     
-    
-    // Form validation
-    $("#addHoursForm").submit(function (event) {
-        var validationError = false;
-        
-        // Validate minutes
-        $('input[name="minutes[]"]').each(function () {
-            if ( $(this).val() < 1 && $(this).is(":disabled") == false) {
-                
-                $(this).parent().append('<div style="position: absolute; margin-top: -20px; margin-left: 70px; background:#aaaaaa;">' +
-                    'Input time!<span class="arrow-left"></span></div>').children("div").delay(2000).hide(1000);
- 
-                validationError = true;
-            }
-        });
-        
-        // Validate date
-        $('input[name="date[]"]').each(function () {
-            if ( $(this).val() == "" && $(this).is(":disabled") == false ) {
-                $(this).parent().append('<div style="position: absolute; margin-top: -20px; margin-left: 110px; background:#aaaaaa;">' +
-                    '<span style="position: relative">Input date!<span class="arrow-left"></span></span></div>').children("div").delay(2000).hide(1000);
-                
-                validationError = true;
-            }
-        });    
-        
-        if (validationError) {
-            event.preventDefault();
-        }
-        
-    });
 </script>
