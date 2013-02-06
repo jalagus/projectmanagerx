@@ -7,7 +7,7 @@ abstract class BaseModel {
     /*
      * Initializes model with database connection
      * 
-     * Use config.php to change the connection parameters
+     * Use config.php to change the connection variables
      */
     public function __construct() {
         try {

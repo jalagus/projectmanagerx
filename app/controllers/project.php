@@ -25,25 +25,13 @@ class Project extends BaseController {
         }
     }    
 
-    /*
-     * Return the index view of the Hours controller
-     */
-
     protected function Index() {
         $this->ReturnView($this->model->Index($this->userid), true);
     }
 
-    /*
-     * Returns add view
-     */
-
     protected function Add() {
         $this->ReturnView("", true);
     }
-
-    /*
-     * Adds project to database
-     */
     
     protected function AddPost() {
         $projectObj = new ProjectDBModel($this->userid, $_POST['projectName'], 
@@ -60,10 +48,6 @@ class Project extends BaseController {
         }
     }
 
-    /*
-     * Returns delete view
-     */
-
     protected function Delete() {
         $projectId = $_GET['id'];
 
@@ -77,10 +61,6 @@ class Project extends BaseController {
         }
     }
 
-    /*
-     * Deletes project
-     */
-
     protected function DeletePost() {
         $projectId = $_POST['projectid'];
 
@@ -88,10 +68,6 @@ class Project extends BaseController {
 
         $this->Redirect("project", "index");
     }
-
-    /*
-     * Returns View -view
-     */
 
     protected function View() {
         $projectId = $_GET['id'];
@@ -106,10 +82,6 @@ class Project extends BaseController {
         }
     }
 
-    /*
-     * Returns edit view
-     */
-
     protected function Edit() {
         $projectId = $_GET['id'];
 
@@ -122,10 +94,6 @@ class Project extends BaseController {
             $error->ReturnView("Cannot find project!", true);
         }
     }
-
-    /*
-     * Updates project data
-     */
     
     protected function EditPost() {
         $projectObj = new ProjectDBModel($this->userid, $_POST['projectName'], 

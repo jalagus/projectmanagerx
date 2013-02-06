@@ -10,10 +10,6 @@ class Record extends BaseController {
         $this->model = new RecordModel();
     }
     
-    /*
-     * Return the index view of the Hours controller
-     */
-
     protected function Index() {
         $userid = $_SESSION['userid'];
 
@@ -26,10 +22,6 @@ class Record extends BaseController {
             $error->ReturnView("Could not load recorded hours!", true);
         }
     }
-
-    /*
-     * Saves the recorded hours to database
-     */
 
     protected function SaveRecordedHours() {
         $minutes = $_POST['minutes'];
@@ -60,7 +52,7 @@ class Record extends BaseController {
     /*
      * Deletes previously recorded hours from the database
      * 
-     * Accessed via ajax so doesn't return any view
+     * Accessed only via ajax so doesn't return any view
      */
 
     protected function DeleteRecordedHours() {
@@ -74,7 +66,7 @@ class Record extends BaseController {
      * Confirm the hours by moving the hours from the recorded hours table to 
      * the hours table
      * 
-     * Accessed via ajax so doesn't return any view
+     * Accessed only via ajax so doesn't return any view
      */
 
     protected function ConfirmRecordedHours() {

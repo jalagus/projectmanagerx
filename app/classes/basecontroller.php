@@ -17,8 +17,7 @@ abstract class BaseController {
     }
 
     /*
-     * Starts the controller with specified action/page in constructor
-     * 
+     * Starts the controller with the specified action/page in constructor
      */
     public function Invoke() {        
         return $this->{$this->action}();
@@ -48,7 +47,7 @@ abstract class BaseController {
         }
     }
     
-    protected function removePostFromAction($action) {
+    private function removePostFromAction($action) {
         if (strstr($action, "Post")) {
             $action = substr($action, 0, strlen($action) - 4);
         }

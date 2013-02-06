@@ -9,13 +9,6 @@ class Error extends BaseController {
         $this->ReturnView($errormsg, true);
     }
     
-    /* 
-     * Returns error with custom error message
-     */
-    protected function LoginError($errormsg) {
-        $this->ReturnView($errormsg, true);
-    }
-    
     /*
      * Returns the error view when user tries to go to url with no controller/action
      */

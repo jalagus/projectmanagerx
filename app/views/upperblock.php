@@ -4,11 +4,11 @@
     $loadStyle = false;
     $loadScript = false;
     
-    if (file_exists(BASE_DIR . "css/views/" . $controller . "/style.css")) {
+    if (file_exists("." . BASE_DIR . "css/views/" . $controller . "/style.css")) {
         $loadStyle = true;
     }
     
-    if (file_exists(BASE_DIR . "js/views/" . $controller . "/scripts.js")) {
+    if (file_exists("." . BASE_DIR . "js/views/" . $controller . "/scripts.js")) {
         $loadScript = true;
     }
     

@@ -25,25 +25,13 @@ class Hours extends BaseController {
         }
     }  
 
-    /*
-     * Return the index view of the Hours controller
-     */
-
     protected function Index() {
         $this->ReturnView($this->model->Index($this->userid), true);
     }
 
-    /*
-     * Returns add view
-     */
-
     protected function Add() {
         $this->ReturnView($this->model->Add($this->userid), true);
     }
-
-    /*
-     * Saves hours to database
-     */
 
     protected function AddPost() {
         $hoursObj = $this->utils->arrayToObject($_POST);
@@ -52,10 +40,6 @@ class Hours extends BaseController {
 
         $this->ReturnView($this->model->Add($this->userid), true);
     }
-
-    /*
-     * Return delete view or deletes the data sent to controller
-     */
 
     protected function Delete() {
         $hoursId = $_GET['id'];
@@ -70,10 +54,6 @@ class Hours extends BaseController {
         }
     }
 
-    /*
-     * Deletes the hours entry
-     */
-
     protected function DeletePost() {
         $hoursId = $_POST['hoursid'];
 
@@ -82,10 +62,6 @@ class Hours extends BaseController {
 
         $this->Redirect("hours", "index");
     }
-
-    /*
-     * Returns edit view
-     */
 
     protected function Edit() {
         $hoursid = $_GET['id'];
@@ -99,10 +75,6 @@ class Hours extends BaseController {
             $error->ReturnView("Cannot find hours!", true);
         }
     }
-
-    /*
-     * Updates the edited hours
-     */
 
     protected function EditPost() {
         $hoursObj = $this->utils->arrayToObject($_POST);

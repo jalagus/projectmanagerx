@@ -10,7 +10,6 @@ class HomeModel extends BaseModel {
         
         $homeObj->projectList = $this->getProjectList($userid);
         $homeObj->lastWorkedProject = $this->getLastProject($userid);
-        $homeObj->mostWorkedProject = $this->getMostWorkedProject($userid);
         
         return $homeObj;
     }
@@ -42,16 +41,6 @@ class HomeModel extends BaseModel {
         return $project;         
     }
 
-    private function getMostWorkedProject($userid) {
-        $query = $this->database->prepare("SELECT hours.date AS date, projects.name AS name FROM hours, projects
-            WHERE hours.projectid = projects.id AND hours.userid = ? ORDER BY hours.date ASC");
-        
-        $query->execute(array($userid)); 
-        
-        $project = $query->fetchObject();
-        
-        return $project->name;  
-    }
 }
 
 ?>

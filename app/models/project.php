@@ -25,9 +25,7 @@ class ProjectModel extends BaseModel {
     /*
      * Adds project to database
      * 
-     * @param int $userid id of the user asking the data
-     * @param string $projectName name of the project
-     * @param string $projectDescription description of the project
+     * @param ProjectDBModel $projectObj object that has project data
      */    
     public function Add(ProjectDBModel $projectObj) {
         if (empty($projectObj->userid) || empty($projectObj->name) || empty($projectObj->description)) {
@@ -85,14 +83,12 @@ class ProjectModel extends BaseModel {
     /*
      * Updates the data from edit view to the database
      * 
-     * @param int $userid id of the user asking the data
-     * @param int $projectid id of the project to be updated
-     * @param string $name updated name of the project
-     * @param string $description updated description of the project
+     * @param ProjectDBModel $projectObj object that contains project data
      * 
      */
     public function Update(ProjectDBModel $projectObj) {       
         $query = $this->database->prepare("UPDATE projects SET name = ?, description = ? WHERE id = ? AND userid = ?");
+        
         $query->execute(array(htmlspecialchars($projectObj->name), $projectObj->description, 
             $projectObj->id, $projectObj->userid));
     }

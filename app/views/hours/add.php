@@ -2,6 +2,9 @@
 
 <p class="helptext"> More rows can be added with the plus sign at the end of the last row. </p>
 
+<p class="helptext"> If there are any errors in the input the they will be highlighted.</p>
+
+
 <?php
     if (!empty($viewbag)) {
         echo "<p> Saved " . $viewbag->savedLines . " entries</p>";
