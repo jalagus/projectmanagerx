@@ -15,7 +15,7 @@ class HomeModel extends BaseModel {
     }
     
     private function getProjectList($userid) {
-        $query = $this->database->prepare("SELECT projects.name AS projectname, hours.minutes AS minutes 
+        $query = $this->database->prepare("SELECT projects.name AS projectname, hours.minutes AS minutes, hours.date AS date 
             FROM hours, projects WHERE projects.id = hours.projectid AND hours.userid = ?");
         
         $query->execute(array($userid)); 

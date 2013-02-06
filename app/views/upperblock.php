@@ -43,7 +43,12 @@
                 
                 $("#datatable").dataTable({
                     "bJQueryUI": true,
-                    "sPaginationType": "full_numbers"                  
+                    "sPaginationType": "full_numbers",
+                    "fnDrawCallback": function( oSettings ) {
+                        $("button, .button" ).button().click(function( event ) {
+                            event.preventDefault();
+                        });                    
+                    }
                 });
                 
                 $("#navigation").buttonset();

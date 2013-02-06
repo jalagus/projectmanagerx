@@ -5,12 +5,17 @@
     <?php echo $viewmodel->lastWorkedProject->name; ?>  </a>
 </p>
 
-<p> <b>Latest inserts</b> </p>
+<p> <b>Last 10 inserts</b> </p>
 <ul>
     <?php
-    
+    $i = 0;
     foreach($viewmodel->projectList as $hours) {
-        echo "<li>" . $hours->projectname . " " . $hours->minutes . "</li>";
+        if ($i++ > 9) {
+            break;
+        }
+        
+        echo "<li>" . floor($hours->minutes / 60) . " hours and " . ($hours->minutes % 60) . 
+                " minutes for \"" . $hours->projectname . "\" dated " . $hours->date . "</li>";
     }
     
     ?>

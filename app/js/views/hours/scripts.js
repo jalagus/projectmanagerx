@@ -49,7 +49,12 @@ $(function() {
             $('.formatError').change(function() {
                 $(this).css("background", "white");                
             });
-                        
+            
+            
+            $('#submit').after('<p id="notification" style="position: relative; top: -32px; left: 100px;">' +
+                '<b>Please check the values in fields highlighted with yellow</b></p>').next("p").delay(2000).hide(500);
+
+
             event.preventDefault();
         }
         
