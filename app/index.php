@@ -11,6 +11,7 @@ require("classes/authentication.php");
 require("classes/utils.php");
 
 // Models
+require("models/admin.php");
 require("models/home.php");
 require("models/project.php");
 require("models/authentication.php");
@@ -31,6 +32,7 @@ require("models/database/hoursdbmodel.php");
 require("models/database/projectdbmodel.php");
 
 // Controllers
+require("controllers/admin.php");
 require("controllers/home.php");
 require("controllers/error.php");
 require("controllers/project.php");

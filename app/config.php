@@ -4,6 +4,8 @@
 define('BASE_DIR', '/');
 define('BASE_NAME', "Project Manager X");
 
+define('ADMIN_USERLEVEL', 100);
+
 // Set include path to BASE_DIR
 set_include_path(BASE_DIR);
 
