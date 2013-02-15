@@ -9,6 +9,9 @@ class RecordViewmodel {
     
     public $minutes;
     public $date;
+    
+    public $endtime;
+    public $starttime;
 
 }
 

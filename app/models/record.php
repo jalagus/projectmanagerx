@@ -39,7 +39,7 @@ class RecordModel extends BaseModel {
      * 
      */
     public function getRecordId($userid, $projectid, $description) {
-        $query = $this->database->prepare("INSERT INTO recordedhours (userid, projectid, description, date) VALUES (?, ?, ?, CURDATE() )"); 
+        $query = $this->database->prepare("INSERT INTO recordedhours (userid, projectid, description, starttime) VALUES (?, ?, ?, NOW() )"); 
         $query->execute(array($userid, $projectid, $description)); 
 
         if ($query == false) {
@@ -55,12 +55,11 @@ class RecordModel extends BaseModel {
      * 
      * @param int $userid id of the user
      * @param int $recordid id of the recording
-     * @param int $minutes recorded minutes
      * 
      */    
-    public function SaveRecordedHours($userid, $recordid, $minutes) {
-        $query = $this->database->prepare("UPDATE recordedhours SET minutes = ? WHERE userid = ? AND id = ?");
-        $query->execute(array($minutes, $userid, $recordid));
+    public function SaveRecordedHours($userid, $recordid) {
+        $query = $this->database->prepare("UPDATE recordedhours SET endtime = NOW() WHERE userid = ? AND id = ?");
+        $query->execute(array($userid, $recordid));
         
         if ($query == false) {
             return false;
@@ -113,8 +112,9 @@ class RecordModel extends BaseModel {
      * 
      */ 
     public function getList($userid) {
-        $query = $this->database->prepare("SELECT r.id AS id, r.minutes AS minutes, 
-            r.date AS date, p.name AS projectname, p.id AS projectid, r.description AS description
+        $query = $this->database->prepare("SELECT r.id AS id, p.name AS projectname, 
+            p.id AS projectid, r.description AS description, 
+            r.starttime AS starttime, r.endtime AS endtime 
             FROM recordedhours AS r, projects AS p 
             WHERE r.projectid = p.id AND r.userid = ?");
         
@@ -123,8 +123,11 @@ class RecordModel extends BaseModel {
         $recordedHoursList = array();
         
         $i = 0;
-        while ($recordObject = $query->fetchObject("Record")) {
-            $recordedHoursList[$i] = $recordObject;
+        while ($recordObject = $query->fetchObject("RecordViewmodel")) {
+                       
+            $recordObject->minutes = floor((strtotime($recordObject->endtime) - strtotime($recordObject->starttime)) / 60);
+            $recordObject->date = date("Y-m-d", strtotime($recordObject->starttime));
+            $recordedHoursList[$i] = $recordObject; 
             $i++;
         }     
         
@@ -138,14 +141,20 @@ class RecordModel extends BaseModel {
      * @param int $hoursid id of the hours
      */     
     public function getById($userid, $hoursid) {
-        $query = $this->database->prepare("SELECT r.id AS id, r.minutes AS minutes, 
-            r.date AS date, p.name AS projectname, p.id AS projectid, r.description AS description
+        $query = $this->database->prepare("SELECT r.id AS id, p.name AS projectname, 
+            p.id AS projectid, r.description AS description,
+            r.starttime AS starttime, r.endtime AS endtime 
             FROM recordedhours AS r, projects AS p 
             WHERE r.projectid = p.id AND r.userid = ? AND r.id = ?");
         
         $query->execute(array($userid, $hoursid));       
         
-        return $query->fetchObject("Record");
+        $recordObject = $query->fetchObject("RecordViewmodel");
+        
+        $recordObject->minutes = floor((strtotime($recordObject->endtime) - strtotime($recordObject->starttime)) / 60);
+        $recordObject->date = date("Y-m-d", strtotime($recordObject->starttime));
+
+        return $recordObject;
     }     
     
 }

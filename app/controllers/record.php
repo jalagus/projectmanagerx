@@ -28,7 +28,7 @@ class Record extends BaseController {
         $recordid = $_POST['recordid'];
         $userid = $_SESSION['userid'];
 
-        $viewdata = $this->model->SaveRecordedHours($userid, $recordid, $minutes);
+        $viewdata = $this->model->SaveRecordedHours($userid, $recordid);
 
         if ($viewdata != false) {
             echo $viewdata;
