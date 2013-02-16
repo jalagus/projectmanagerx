@@ -43,8 +43,7 @@ class AdminModel extends BaseModel {
             return false;
         }
 
-        $password = $username . $password;
-        $password = sha1($password);
+        $password = sha1(SHA1_SALT . $password);
 
         $query = $this->database->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
         $query->execute(array($username, $password));

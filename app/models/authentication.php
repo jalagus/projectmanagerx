@@ -10,7 +10,7 @@ class AuthenticationModel extends BaseModel {
     public function checkLogin($username, $password) {
         
         // Uses username as a salt
-        $hashedSaltedPassword = sha1($username . $password);
+        $hashedSaltedPassword = sha1(SHA1_SALT . $password);
         
         $query = $this->database->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
         $query->execute(array($username, $hashedSaltedPassword));

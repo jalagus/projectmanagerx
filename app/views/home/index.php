@@ -20,4 +20,10 @@
     
     ?>
 </ul>
-<button> Change password</button>
+<button id="changepassword"> Change password</button>
+
+<script>
+    $("#changepassword").click(function() {
+        window.location.href = "<?php echo BASE_DIR; ?>home/changepassword";
+    });
+</script>

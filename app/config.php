@@ -6,6 +6,8 @@ define('BASE_NAME', "Project Manager X");
 
 define('ADMIN_USERLEVEL', 100);
 
+define('SHA1_SALT', "PRMX");
+
 // Set include path to BASE_DIR
 set_include_path(BASE_DIR);
 

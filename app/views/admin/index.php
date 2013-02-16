@@ -5,7 +5,9 @@ if (isset($viewbag)) {
     echo "<p>". $viewbag . "</p>";
 }
 ?>
+<button id="addnewuser">Add new user</button>
 
+<h3>User list </h3>
 <table>
     <thead>
         <td><b>Username</b></td>
@@ -19,7 +21,6 @@ foreach ($viewmodel as $user) {
 
 ?>
 </table>
-<button id="addnewuser">Add new user</button>
 
 <script>
     $("#addnewuser").click(function () {

@@ -25,5 +25,8 @@ Password<br/>
 
 </div>
 
+    <?php
+        echo $viewmodel;
+    ?>
 </body>
 </html>

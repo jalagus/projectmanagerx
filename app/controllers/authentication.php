@@ -18,8 +18,9 @@ class Authentication extends BaseController {
             $this->Redirect("home", "index");
         }
         else {
-            $error = new Error("LoginError", "");
-            $error->ReturnView("", false);
+            $error = new Authentication("Index", "");
+            $errorMsg = '<script>alert("Wrong password or username!");</script>';
+            $error->ReturnView($errorMsg, false);
         }
         
     }
