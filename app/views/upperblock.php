@@ -4,11 +4,11 @@
     $loadStyle = false;
     $loadScript = false;
     
-    if (file_exists("." . BASE_DIR . "css/views/" . $controller . "/style.css")) {
+    if (file_exists($_SERVER['DOCUMENT_ROOT'] . BASE_DIR . "css/views/" . $controller . "/style.css")) {
         $loadStyle = true;
     }
     
-    if (file_exists("." . BASE_DIR . "js/views/" . $controller . "/scripts.js")) {
+    if (file_exists($_SERVER['DOCUMENT_ROOT'] . BASE_DIR . "js/views/" . $controller . "/scripts.js")) {
         $loadScript = true;
     }
     
@@ -75,13 +75,18 @@
             </div>
             <div id="navigation">
                 <ul>
-                    <li><a href="<?php echo BASE_DIR; ?>home/">Dashboard</a></li>
+                    <li><a href="<?php echo BASE_DIR; ?>home/">Home</a></li>
                     <li><a href="<?php echo BASE_DIR; ?>record/">Record hours</a></li>
                     <li><a href="<?php echo BASE_DIR; ?>hours/add">Add hours</a></li>
                     <li><a href="<?php echo BASE_DIR; ?>hours/">List hours</a></li>
                     <li><a href="<?php echo BASE_DIR; ?>project/add">Add project</a></li>
                     <li><a href="<?php echo BASE_DIR; ?>project/">List projects</a></li>    
                     <li><a href="<?php echo BASE_DIR; ?>report/">Generate reports</a></li>
+                    <?php
+                        if (isset($_SESSION['admin'])) {
+                            echo '<li><a href="' . BASE_DIR . 'admin/">Admin</a></li>';
+                        }
+                    ?>
                     <li><a id="logoutButton" href="<?php echo BASE_DIR; ?>authentication/logout">Logout</a></li>
                 </ul>               
             </div>

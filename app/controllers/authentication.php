@@ -6,6 +6,11 @@ class Authentication extends BaseController {
         $this->ReturnView("", false);            
     }
     
+    /*
+     * Checks login credentials and sets session variables
+     * 
+     * If user is admin, sets admin-session variable
+     */
     protected function Login() {
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -14,6 +19,10 @@ class Authentication extends BaseController {
         
         if ($model->checkLogin($username, $password)) {
             $_SESSION['logged'] = true;
+            
+            if ($model->getUserlevel() == ADMIN_USERLEVEL) {
+                $_SESSION['admin'] = true;
+            }
             
             $this->Redirect("home", "index");
         }
@@ -25,6 +34,9 @@ class Authentication extends BaseController {
         
     }
     
+    /*
+     * Destroys session
+     */
     protected function Logout() {
         $_SESSION['logged'] = false;
         session_destroy();

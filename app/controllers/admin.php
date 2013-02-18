@@ -37,6 +37,12 @@ class Admin extends BaseController {
         $this->ReturnView("", true);
     }
     
+    
+    /*
+     * Gets user data and adds the user to database
+     * 
+     * Return error page on error
+     */
     protected function AddUserPost() {
         $username = $_POST['username'];
 
@@ -64,6 +70,12 @@ class Admin extends BaseController {
     protected function DeleteUser() {
         $this->ReturnView($this->adminModel->DeleteUser($_GET['id']), true);
     }
+    
+    /* 
+     * Deletes user data from database
+     * 
+     * Return error if user cannot be removed
+     */
     protected function DeleteUserPost() {
         $userid = $_POST['userid'];
         

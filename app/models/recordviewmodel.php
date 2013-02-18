@@ -6,10 +6,7 @@ class RecordViewmodel {
     public $projectname;
     
     public $description;
-    
-    public $minutes;
-    public $date;
-    
+
     public $endtime;
     public $starttime;
 

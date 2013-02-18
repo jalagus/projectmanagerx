@@ -47,6 +47,9 @@ abstract class BaseController {
         }
     }
     
+    /*
+     * Removes post-suffix from string
+     */
     private function removePostFromAction($action) {
         if (strstr($action, "Post")) {
             $action = substr($action, 0, strlen($action) - 4);

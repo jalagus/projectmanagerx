@@ -26,6 +26,16 @@ class AuthenticationModel extends BaseModel {
             return false;
         }
     }
+    
+    /*
+     * Gets userlevel of current user
+     */
+    public function getUserlevel() {
+        $query = $this->database->prepare("SELECT level FROM users WHERE id = ?");        
+        $query->execute(array($_SESSION['userid']));
+        
+        return $query->fetchObject()->level;
+    }
 
 }
 

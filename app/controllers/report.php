@@ -6,10 +6,11 @@ class Report extends BaseController {
         $userid = $_SESSION['userid'];
         $startDate = $_POST['startDate'];
         $endDate = $_POST['endDate'];
+        $projectId = $_POST['projectid'];
         
         $viewmodel = new ReportModel();
         
-        $this->ReturnView($viewmodel->Index($userid, $startDate, $endDate), true);
+        $this->ReturnView($viewmodel->Index($userid, $startDate, $endDate, $projectId), true);
     }    
 }
 

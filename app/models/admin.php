@@ -51,6 +51,9 @@ class AdminModel extends BaseModel {
         return $query;        
     }
     
+    /* 
+     * Returns true if username is not found on database, else false
+     */
     private function isUsernameFree($username) {
         $query = $this->database->prepare("SELECT username FROM users WHERE username = ?");
         $query->execute(array($username));
@@ -63,6 +66,9 @@ class AdminModel extends BaseModel {
         }
     }
     
+    /*
+     * Returns true if user is admin, else false
+     */
     public function isAdmin($userid) {
         $query = $this->database->prepare("SELECT * FROM users WHERE id = ? AND level = ?");
         

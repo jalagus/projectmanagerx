@@ -26,6 +26,11 @@ class Home extends BaseController {
         $this->ReturnView("", true);
     }
 
+    /*
+     * Gets new password and changes it
+     * 
+     * Returns error if there is error changing users password
+     */
     protected function ChangePasswordPost() {
         $userid = $_SESSION['userid'];
         

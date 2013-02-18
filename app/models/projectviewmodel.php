@@ -23,7 +23,7 @@ class ProjectViewmodel {
      * 
      * @param int $userid id of the user
      */    
-    public function getList($userid) {  
+    public function getList($userid) {          
         $query = $this->database->prepare("SELECT * FROM projects WHERE userid = ? ORDER BY name ASC");
         
         $query->execute(array($userid)); 

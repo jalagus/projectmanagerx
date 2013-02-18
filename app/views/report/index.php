@@ -5,11 +5,22 @@
         <thead>
         <td>Start date</td>
         <td>End date</td>
+        <td>Project</td>        
         <td></td>
         </thead>
         <tr>
             <td><input class="dateInput" type="text" value="<?php echo $viewmodel->startdate; ?>" name="startDate" /></td>
             <td><input class="dateInput" type="text" value="<?php echo $viewmodel->enddate; ?>" name="endDate" /></td>
+            <td>
+                <select name="projectid">
+                    <option></option>
+                <?php
+                foreach ($viewmodel->projectlist as $project) {
+                    echo '<option value="' . $project->id . '">' . $project->name . "</option>";
+                }
+                ?>
+                </select>
+            </td>
             <td><input type="submit" value="Get report" /></td>
         </tr>
     </table>
