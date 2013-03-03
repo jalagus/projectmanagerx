@@ -2,7 +2,7 @@
 
 <?php echo "<p>" . $viewbag . "</p>"; ?>
 
-<form action="/home/changepassword" method="post">
+<form action="<?php echo BASE_DIR; ?>home/changepassword" method="post">
     Old password:<br/>
     <input type="password" name="oldpass" /><br/>
 
